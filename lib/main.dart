@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:push_kyc/App/core/config/injection.dart';
+import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/App/core/routers/app_router.dart';
 import 'package:push_kyc/App/core/themes/app_theme.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
 import 'package:toastification/toastification.dart';
 
 late List<CameraDescription> cameras;

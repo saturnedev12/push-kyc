@@ -49,10 +49,10 @@ class _BirthdatePageState extends State<BirthdatePage> {
 
     return BlocBuilder<KycDocCubit, KycDocState>(
       buildWhen:
-          (p, n) =>
-              p.birthYear != n.birthYear ||
-              p.birthMonth != n.birthMonth ||
-              p.birthDay != n.birthDay,
+          (prev, curr) =>
+              prev.birthYear != curr.birthYear ||
+              prev.birthMonth != curr.birthMonth ||
+              prev.birthDay != curr.birthDay,
       builder: (context, state) {
         _syncControllers(state);
 
@@ -61,56 +61,70 @@ class _BirthdatePageState extends State<BirthdatePage> {
         final lastDate = _today;
 
         return Scaffold(
-          body: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-            child: CustomScrollView(
-              slivers: [
-                SliverAppBar(
-                  title: Text('Date de naissance'),
-                  pinned: true,
-                  centerTitle: false,
-                ),
-                SliverToBoxAdapter(child: _Header(selected: selected)),
-                SliverGap(10),
-                SliverToBoxAdapter(
+          backgroundColor: Colors.grey.shade100,
+
+          body: CustomScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: [
+              SliverAppBar(
+                title: Text('Date de naissance'),
+                pinned: true,
+                centerTitle: false,
+                backgroundColor: Colors.grey.shade100,
+              ),
+              SliverGap(25),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                sliver: SliverToBoxAdapter(child: _Header(selected: selected)),
+              ),
+              SliverGap(20),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                sliver: SliverToBoxAdapter(
                   child: _IosCard(
                     radius: cardRadius,
-                    child: DatePickerTheme(
-                      data: DatePickerThemeData(
-                        backgroundColor: Colors.transparent,
-                        headerForegroundColor: Colors.black87,
-                        todayForegroundColor: WidgetStatePropertyAll(color),
-
-                        rangeSelectionBackgroundColor: color.withOpacity(.12),
-
-                        dayForegroundColor: WidgetStateProperty.resolveWith((
-                          s,
-                        ) {
-                          if (s.contains(WidgetState.selected)) return color;
-                          return Colors.black87;
-                        }),
-                        dayBackgroundColor: WidgetStateProperty.resolveWith((
-                          s,
-                        ) {
-                          if (s.contains(WidgetState.selected)) return color;
-                          return Colors.red;
-                        }),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(cardRadius),
+                    child: Material(
+                      child: DatePickerTheme(
+                        data: DatePickerThemeData(
+                          backgroundColor: Colors.transparent,
+                          headerForegroundColor: Colors.black87,
+                          todayForegroundColor: WidgetStatePropertyAll(color),
+                          rangeSelectionBackgroundColor: color.withOpacity(.12),
+                          dayForegroundColor: WidgetStateProperty.resolveWith((
+                            s,
+                          ) {
+                            if (s.contains(WidgetState.selected)) {
+                              return AppTheme.kSurfaceLight;
+                            }
+                            return Colors.black87;
+                          }),
+                          dayBackgroundColor: WidgetStateProperty.resolveWith((
+                            s,
+                          ) {
+                            if (s.contains(WidgetState.selected)) return color;
+                            return Colors.transparent;
+                          }),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(cardRadius),
+                          ),
                         ),
-                      ),
-                      child: CalendarDatePicker(
-                        initialDate: selected,
-                        firstDate: firstDate,
-                        lastDate: lastDate,
-                        onDateChanged:
-                            (d) => context.read<KycDocCubit>().setBirthDate(d),
+                        child: CalendarDatePicker(
+                          initialDate: selected,
+                          firstDate: firstDate,
+                          lastDate: lastDate,
+                          onDateChanged:
+                              (d) =>
+                                  context.read<KycDocCubit>().setBirthDate(d),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SliverGap(10),
-                SliverToBoxAdapter(
+              ),
+              SliverGap(20),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                sliver: SliverToBoxAdapter(
                   child: _IosCard(
                     radius: cardRadius,
                     padding: const EdgeInsets.symmetric(
@@ -156,10 +170,9 @@ class _BirthdatePageState extends State<BirthdatePage> {
                     ),
                   ),
                 ),
-                SliverGap(10),
-                SliverGap(10),
-              ],
-            ),
+              ),
+              SliverGap(10),
+            ],
           ),
           bottomNavigationBar: Container(
             padding: const EdgeInsets.symmetric(

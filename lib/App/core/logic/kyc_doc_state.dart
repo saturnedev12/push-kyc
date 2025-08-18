@@ -62,5 +62,9 @@ class KycDocState extends Equatable {
     pathVerso,
     pathPassport,
     validationOk,
+    pathSelfie,
+    birthYear,
+    birthMonth,
+    birthDay,
   ];
 }
