@@ -24,6 +24,12 @@ import 'package:push_kyc/App/core/network/utils/easy_loading_handler.dart'
     as _i231;
 import 'package:push_kyc/App/core/network/utils/env_handler.dart' as _i987;
 import 'package:push_kyc/App/core/utils/session_manager.dart' as _i315;
+import 'package:push_kyc/App/features/photon_adress/data/repository/photon_repository.dart'
+    as _i670;
+import 'package:push_kyc/App/features/photon_adress/domain/usecases/photon_address_usecases.dart'
+    as _i429;
+import 'package:push_kyc/App/features/photon_adress/presentation/logic/photon_adress_cubit.dart'
+    as _i927;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -55,6 +61,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i921.ErrorInterceptor>(),
           gh<_i559.RequestInterceptor>(),
         ));
+    gh.lazySingleton<_i670.PhotonRepository>(
+        () => _i670.PhotonRepository(gh<_i361.Dio>()));
+    gh.factory<_i429.PhotonAddressUsecases>(
+        () => _i429.PhotonAddressUsecases(gh<_i670.PhotonRepository>()));
+    gh.factory<_i927.PhotonAdressCubit>(
+        () => _i927.PhotonAdressCubit(gh<_i429.PhotonAddressUsecases>()));
     return this;
   }
 }
