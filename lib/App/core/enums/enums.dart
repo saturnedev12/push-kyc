@@ -2,11 +2,8 @@
 
 enum PaymentOption { senderPays, receiverPays }
 
-enum RoleEnum {
-  ADMIN,
-  MERCHANT,
-  DELIVERER,
-  CUSTOMER,
-}
+enum RoleEnum { ADMIN, MERCHANT, DELIVERER, CUSTOMER }
 
 enum PhaseEnum { PICKUP, DELIVERY, RETURNER }
+
+enum Sexe { homme, femme }

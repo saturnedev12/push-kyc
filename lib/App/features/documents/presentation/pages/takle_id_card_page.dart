@@ -7,9 +7,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/source_file_popup.dart';
+import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
 
 class TakleIdCardPage extends StatefulWidget {
   const TakleIdCardPage({super.key});
@@ -66,7 +68,7 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
                                   top: Radius.circular(22),
                                 ),
                               ),
-                              builder: (_) => SourceFilePopup(),
+                              builder: (_) => const SourceFilePopup(),
                             ).then((value) {
                               if (value is File) {
                                 context.read<KycDocCubit>().setRecto(
@@ -81,7 +83,7 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
                           },
                           icon: FontAwesomeIcons.idCard,
                         ),
-                        Gap(30),
+                        const Gap(30),
                         _fileBox(
                           label: 'Verso de la pièce',
                           imagePath: state.pathVerso,
@@ -99,7 +101,7 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
                                   top: Radius.circular(22),
                                 ),
                               ),
-                              builder: (_) => SourceFilePopup(),
+                              builder: (_) => const SourceFilePopup(),
                             ).then((value) {
                               if (value is File) {
                                 context.read<KycDocCubit>().setVerso(
@@ -133,6 +135,7 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
                       hasType
                           ? () {
                             log('Continuer');
+                            context.pushNamed(TakeSelfiePage.name);
                           }
                           : null,
                   child: const Text('Continuer'),
@@ -155,11 +158,11 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
     return GestureDetector(
       onTap: onTap,
       child: DottedBorder(
-        options: RoundedRectDottedBorderOptions(
+        options: const RoundedRectDottedBorderOptions(
           color: Colors.grey,
           strokeWidth: 1.5,
-          dashPattern: const [6, 4],
-          radius: const Radius.circular(16),
+          dashPattern: [6, 4],
+          radius: Radius.circular(16),
         ),
 
         child:

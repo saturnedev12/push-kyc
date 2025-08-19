@@ -62,7 +62,7 @@ class _TakeSelfiePageState extends State<TakeSelfiePage> {
                     ),
                   ),
                 ),
-                SliverGap(20),
+                const SliverGap(20),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   sliver: SliverToBoxAdapter(

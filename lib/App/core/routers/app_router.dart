@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:push_kyc/App/core/services/navigation_service.dart';
+import 'package:push_kyc/App/features/adress_location/presentation/pages/adress_location_page.dart';
 import 'package:push_kyc/App/features/birthdate_page/presentation/birthdate_page.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/take_id_camera.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/take_passeport_page.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/takle_id_card_page.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/type_documents_page.dart';
 import 'package:push_kyc/App/features/documents/presentation/utils/take_id_camera_options.dart';
+import 'package:push_kyc/App/features/personnal_information/presentation/pages/personnal_information_page.dart';
 import 'package:push_kyc/App/features/photon_adress/presentation/pages/photon_adreess_picker_page.dart';
 import 'package:push_kyc/App/features/selfie/presentaion/pages/selfie_camera.dart';
 import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
@@ -14,14 +16,28 @@ import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.
 class AppRouter {
   static GoRouter router = GoRouter(
     navigatorKey: NavigationService.navigatorKey,
-    initialLocation: '/photon_location',
+    initialLocation: '/personnal_informations',
     redirect: (context, state) => null,
     routes: [
+      GoRoute(
+        path: '/personnal_informations',
+        name: PersonnalInformationPage.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const PersonnalInformationPage(); // const OnboardingPage();
+        },
+      ),
       GoRoute(
         path: '/photon_location',
         name: PhotonAddressPickerPage.name,
         builder: (BuildContext context, GoRouterState state) {
           return const PhotonAddressPickerPage(); // const OnboardingPage();
+        },
+      ),
+      GoRoute(
+        path: '/address_location',
+        name: AdressLocationPage.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const AdressLocationPage(); // const OnboardingPage();
         },
       ),
       GoRoute(

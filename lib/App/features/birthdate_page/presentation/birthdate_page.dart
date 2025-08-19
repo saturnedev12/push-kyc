@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
 import 'package:push_kyc/App/core/themes/app_theme.dart';
+import 'package:push_kyc/App/features/documents/presentation/pages/type_documents_page.dart';
 
 class BirthdatePage extends StatefulWidget {
   const BirthdatePage({super.key});
@@ -186,9 +187,11 @@ class _BirthdatePageState extends State<BirthdatePage> {
                   onPressed:
                       ok
                           ? () {
-                            context.pop(
-                              context.read<KycDocCubit>().state.birthDate,
-                            );
+                            // context.pop(
+                            //   context.read<KycDocCubit>().state.birthDate,
+                            // );
+
+                            context.pushNamed(TypeDocumentsPage.name);
                           }
                           : null,
                   child: const Text('Continuer'),

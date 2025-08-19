@@ -8,9 +8,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
 import 'package:push_kyc/App/features/documents/presentation/pages/source_file_popup.dart';
+import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
 
 class TakePasseportPage extends StatefulWidget {
   const TakePasseportPage({super.key});
@@ -101,6 +103,7 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
                       hasType
                           ? () {
                             log('Continuer');
+                            context.pushNamed(TakeSelfiePage.name);
                           }
                           : null,
                   child: const Text('Continuer'),

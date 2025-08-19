@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart'; // pour ListTile/shimmer container round
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:push_kyc/App/core/config/injection.dart';
 import 'package:push_kyc/App/core/themes/app_theme.dart';
@@ -120,7 +121,9 @@ class _PhotonAddressPickerPageState extends State<PhotonAddressPickerPage> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             title: CupertinoSearchTextField(
+              autofocus: true,
               controller: _searchController,
               placeholder: widget.hintText,
               onChanged: _onQueryChanged,
@@ -129,7 +132,11 @@ class _PhotonAddressPickerPageState extends State<PhotonAddressPickerPage> {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (context.canPop()) {
+                    context.pop();
+                  }
+                },
                 icon: const Icon(FontAwesomeIcons.solidCircleXmark),
               ),
             ],
@@ -361,9 +368,35 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        "Tape une recherche pour commencer",
-        style: TextStyle(color: CupertinoColors.inactiveGray),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(CupertinoIcons.search, size: 48, color: AppTheme.kAccent),
+            SizedBox(height: 12),
+            Text(
+              "Tape une recherche pour commencer",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: CupertinoColors.label,
+              ),
+            ),
+            SizedBox(height: 6),
+            Text(
+              "Les résultats peuvent prendre quelques secondes : "
+              "j'utilise Photon (API open source), parfois plus lent ou limité.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppTheme.kAccent,
+                fontSize: 13,
+                height: 1.3,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -82,4 +82,29 @@ class KycDocCubit extends Cubit<KycDocState> {
     final max = DateUtils.getDaysInMonth(y, m);
     emit(state.copyWith(birthDay: d.clamp(1, max)));
   }
+
+  void setAddress({
+    required String name,
+    required double lon,
+    required double lat,
+  }) {
+    emit(state.copyWith(addressName: name, addressLon: lon, addressLat: lat));
+  }
+
+  void setResidenceCountryCode(String? code) {
+    if (code == null || code.isEmpty) return;
+    emit(state.copyWith(residenceCountryCode: code.toUpperCase()));
+  }
+
+  void setNationalityCountryCode(String? code) {
+    if (code == null || code.isEmpty) return;
+    emit(state.copyWith(nationalityCountryCode: code.toUpperCase()));
+  }
+
+  void setPostalCode(String? code) {
+    final trimmed = code?.trim();
+    emit(
+      state.copyWith(postalCode: (trimmed?.isEmpty ?? true) ? null : trimmed),
+    );
+  }
 }
