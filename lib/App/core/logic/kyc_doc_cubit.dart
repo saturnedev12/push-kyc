@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:push_kyc/App/core/enums/enums.dart';
 import 'package:push_kyc/App/features/documents/presentation/utils/enums.dart';
 
 import 'kyc_doc_state.dart';
@@ -107,4 +108,13 @@ class KycDocCubit extends Cubit<KycDocState> {
       state.copyWith(postalCode: (trimmed?.isEmpty ?? true) ? null : trimmed),
     );
   }
+
+  void setFirstName(String? v) => emit(state.copyWith(firstName: _clean(v)));
+  void setLastName(String? v) => emit(state.copyWith(lastName: _clean(v)));
+  void setEmail(String? v) => emit(state.copyWith(email: _clean(v)));
+  void setPhone(String? v) => emit(state.copyWith(phoneNumber: _clean(v)));
+  void setSexe(Sexe? s) => emit(state.copyWith(sexe: s));
+
+  String? _clean(String? v) =>
+      (v == null || v.trim().isEmpty) ? null : v.trim();
 }
