@@ -258,9 +258,9 @@ class AppTheme {
       tabBarTheme: TabBarTheme(
         labelColor: kPrimary,
         unselectedLabelColor: Colors.black54,
-        indicator: UnderlineTabIndicator(
-          borderSide: const BorderSide(color: kPrimary, width: 2),
-          insets: const EdgeInsets.symmetric(horizontal: 24),
+        indicator: const UnderlineTabIndicator(
+          borderSide: BorderSide(color: kPrimary, width: 2),
+          insets: EdgeInsets.symmetric(horizontal: 24),
         ),
         labelStyle: textTheme.titleMedium,
         unselectedLabelStyle: textTheme.titleMedium,
@@ -278,3 +278,12 @@ class AppTheme {
     );
   }
 }
+
+/**
+#02731E
+#025918
+#014011
+#1C8C24
+#F2F2F2
+
+ */
