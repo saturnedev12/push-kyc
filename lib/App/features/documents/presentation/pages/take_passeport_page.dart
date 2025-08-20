@@ -9,10 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/source_file_popup.dart';
-import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/source_file_popup.dart';
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
+import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.dart';
 
 class TakePasseportPage extends StatefulWidget {
   const TakePasseportPage({super.key});
@@ -69,7 +71,7 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
                                   top: Radius.circular(22),
                                 ),
                               ),
-                              builder: (_) => SourceFilePopup(),
+                              builder: (_) => const SourceFilePopup(),
                             ).then((value) {
                               if (value is File) {
                                 context.read<KycDocCubit>().setPassport(
@@ -98,15 +100,24 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
             child: BlocSelector<KycDocCubit, KycDocState, bool>(
               selector: (stat) => stat.pathPassport != null,
               builder: (context, hasType) {
+                final cubit = context.read<KycDocCubit>();
+                bool alreadyStarted = cubit.state.alreadyStarted;
+
                 return ElevatedButton(
                   onPressed:
                       hasType
-                          ? () {
-                            log('Continuer');
-                            context.pushNamed(TakeSelfiePage.name);
+                          ? () async {
+                            await getIt<KycDocLocalRepository>().save(
+                              cubit.state,
+                            );
+                            if (alreadyStarted) {
+                              context.pop(true);
+                            } else {
+                              context.pushNamed(TakeSelfiePage.name);
+                            }
                           }
                           : null,
-                  child: const Text('Continuer'),
+                  child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
                 );
               },
             ),
@@ -126,11 +137,11 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
     return GestureDetector(
       onTap: onTap,
       child: DottedBorder(
-        options: RoundedRectDottedBorderOptions(
+        options: const RoundedRectDottedBorderOptions(
           color: Colors.grey,
           strokeWidth: 1.5,
-          dashPattern: const [6, 4],
-          radius: const Radius.circular(16),
+          dashPattern: [6, 4],
+          radius: Radius.circular(16),
         ),
 
         child:

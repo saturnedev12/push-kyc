@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/core/themes/app_theme.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/core/themes/app_theme.dart';
 
 class AdressMap extends StatefulWidget {
   const AdressMap({

@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:isar/isar.dart';
-import 'package:push_kyc/App/core/config/isar_config.dart';
-import 'package:push_kyc/App/features/authentification/data/models/local/user_local.dart';
+import 'package:push_kyc/app/core/config/isar_config.dart';
+import 'package:push_kyc/app/features/authentification/data/models/local/user_local.dart';
 
 @singleton
 class SessionManager {

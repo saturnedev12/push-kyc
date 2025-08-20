@@ -7,11 +7,11 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/enums.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/select_and_crop_from_gallery.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/take_id_camera_options.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/select_and_crop_from_gallery.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/take_id_camera_options.dart';
 
 import 'take_id_camera.dart';
 
@@ -134,12 +134,12 @@ class _PickerTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: DottedBorder(
-        options: RoundedRectDottedBorderOptions(
-          color: const Color(0xFFBDBDBD),
-          dashPattern: const [6, 4],
+        options: const RoundedRectDottedBorderOptions(
+          color: Color(0xFFBDBDBD),
+          dashPattern: [6, 4],
           strokeWidth: 1.4,
 
-          radius: const Radius.circular(18),
+          radius: Radius.circular(18),
         ),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),

@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:push_kyc/App/features/photon_adress/data/models/photon_adress_model.dart';
-import 'package:push_kyc/App/features/photon_adress/data/repository/photon_repository.dart';
+import 'package:push_kyc/app/features/photon_adress/data/models/photon_adress_model.dart';
+import 'package:push_kyc/app/features/photon_adress/data/repository/photon_repository.dart';
 
 @injectable
 class PhotonAddressUsecases {

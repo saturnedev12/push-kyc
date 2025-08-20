@@ -9,10 +9,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image/image.dart' as img;
-import 'package:push_kyc/App/core/extension/context_extension.dart';
-import 'package:push_kyc/App/core/themes/app_theme.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/enums.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/take_id_camera_options.dart';
+import 'package:push_kyc/app/core/extension/context_extension.dart';
+import 'package:push_kyc/app/core/themes/app_theme.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/take_id_camera_options.dart';
 
 import '../utils/document_camera_utils.dart';
 
@@ -195,7 +195,7 @@ class _TakeIdCameraState extends State<TakeIdCamera> {
         }
         return LayoutBuilder(
           builder: (context, constraints) {
-            final double radius = 8;
+            const double radius = 8;
             final screenSize = Size(
               constraints.maxWidth,
               constraints.maxHeight,
@@ -255,9 +255,12 @@ class _TakeIdCameraState extends State<TakeIdCamera> {
                     child: Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
+                          shape: const CircleBorder(),
                           backgroundColor: Colors.white,
-                          side: BorderSide(width: 8, color: AppTheme.kAccent),
+                          side: const BorderSide(
+                            width: 8,
+                            color: AppTheme.kAccent,
+                          ),
                         ),
 
                         onPressed: () async {
@@ -296,7 +299,7 @@ class _TakeIdCameraState extends State<TakeIdCamera> {
                               size: 50,
                               color: Colors.white,
                             ),
-                            Gap(20),
+                            const Gap(20),
                             Text(
                               instructionText(
                                 widget.takeIdCameraOptions.typeId,
@@ -320,11 +323,11 @@ class _TakeIdCameraState extends State<TakeIdCamera> {
 
                     child:
                         _capturing
-                            ? CupertinoActivityIndicator(
+                            ? const CupertinoActivityIndicator(
                               radius: 40,
                               color: Colors.white,
                             )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                   ),
                 ],
               ),

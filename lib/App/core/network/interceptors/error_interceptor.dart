@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:push_kyc/App/core/utils/session_manager.dart';
+import 'package:push_kyc/app/core/utils/session_manager.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../services/navigation_service.dart';

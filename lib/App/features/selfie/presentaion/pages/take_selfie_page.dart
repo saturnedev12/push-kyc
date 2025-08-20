@@ -10,10 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/source_file_popup.dart';
-import 'package:push_kyc/App/features/selfie/presentaion/pages/selfie_camera.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/source_file_popup.dart';
+import 'package:push_kyc/app/features/home/presentation/pages/home_page.dart';
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
+import 'package:push_kyc/app/features/selfie/presentaion/pages/selfie_camera.dart';
 
 class TakeSelfiePage extends StatefulWidget {
   const TakeSelfiePage({super.key});
@@ -98,11 +101,17 @@ class _TakeSelfiePageState extends State<TakeSelfiePage> {
             child: BlocSelector<KycDocCubit, KycDocState, bool>(
               selector: (s) => s.pathSelfie != null,
               builder: (context, ok) {
+                final cubit = context.read<KycDocCubit>();
+
                 return ElevatedButton(
                   onPressed:
                       ok
-                          ? () {
+                          ? () async {
+                            await getIt<KycDocLocalRepository>().save(
+                              cubit.state,
+                            );
                             log('Continuer');
+                            context.goNamed(HomePage.name);
                           }
                           : null,
                   child: const Text('Continuer'),

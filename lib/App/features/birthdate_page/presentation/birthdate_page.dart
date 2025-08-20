@@ -5,10 +5,13 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/core/themes/app_theme.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/type_documents_page.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/core/themes/app_theme.dart';
+import 'package:push_kyc/app/features/adress_location/presentation/pages/adress_location_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/type_documents_page.dart';
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 
 class BirthdatePage extends StatefulWidget {
   const BirthdatePage({super.key});
@@ -45,8 +48,8 @@ class _BirthdatePageState extends State<BirthdatePage> {
 
   @override
   Widget build(BuildContext context) {
-    final color = AppTheme.kPrimary;
-    final cardRadius = 20.0;
+    const color = AppTheme.kPrimary;
+    const cardRadius = 20.0;
 
     return BlocBuilder<KycDocCubit, KycDocState>(
       buildWhen:
@@ -68,17 +71,17 @@ class _BirthdatePageState extends State<BirthdatePage> {
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             slivers: [
               SliverAppBar(
-                title: Text('Date de naissance'),
+                title: const Text('Date de naissance'),
                 pinned: true,
                 centerTitle: false,
                 backgroundColor: Colors.grey.shade100,
               ),
-              SliverGap(25),
+              const SliverGap(25),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 sliver: SliverToBoxAdapter(child: _Header(selected: selected)),
               ),
-              SliverGap(20),
+              const SliverGap(20),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 sliver: SliverToBoxAdapter(
@@ -89,7 +92,9 @@ class _BirthdatePageState extends State<BirthdatePage> {
                         data: DatePickerThemeData(
                           backgroundColor: Colors.transparent,
                           headerForegroundColor: Colors.black87,
-                          todayForegroundColor: WidgetStatePropertyAll(color),
+                          todayForegroundColor: const WidgetStatePropertyAll(
+                            color,
+                          ),
                           rangeSelectionBackgroundColor: color.withOpacity(.12),
                           dayForegroundColor: WidgetStateProperty.resolveWith((
                             s,
@@ -122,7 +127,7 @@ class _BirthdatePageState extends State<BirthdatePage> {
                   ),
                 ),
               ),
-              SliverGap(20),
+              const SliverGap(20),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 sliver: SliverToBoxAdapter(
@@ -172,7 +177,7 @@ class _BirthdatePageState extends State<BirthdatePage> {
                   ),
                 ),
               ),
-              SliverGap(10),
+              const SliverGap(10),
             ],
           ),
           bottomNavigationBar: Container(
@@ -183,18 +188,25 @@ class _BirthdatePageState extends State<BirthdatePage> {
             child: BlocSelector<KycDocCubit, KycDocState, bool>(
               selector: (s) => s.birthDate != null,
               builder: (context, ok) {
+                final cubit = context.read<KycDocCubit>();
+                bool alreadyStarted = cubit.state.alreadyStarted;
+
                 return ElevatedButton(
                   onPressed:
                       ok
-                          ? () {
-                            // context.pop(
-                            //   context.read<KycDocCubit>().state.birthDate,
-                            // );
-
-                            context.pushNamed(TypeDocumentsPage.name);
+                          ? () async {
+                            cubit.setAlreadyStarted(true);
+                            await getIt<KycDocLocalRepository>().save(
+                              cubit.state,
+                            );
+                            if (alreadyStarted) {
+                              context.pop(true);
+                            } else {
+                              context.pushNamed(AdressLocationPage.name);
+                            }
                           }
                           : null,
-                  child: const Text('Continuer'),
+                  child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
                 );
               },
             ),

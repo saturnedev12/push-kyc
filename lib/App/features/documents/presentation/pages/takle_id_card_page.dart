@@ -1,4 +1,6 @@
 // tale_id_card_page.dart
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
 import 'dart:io';
 
@@ -8,10 +10,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/source_file_popup.dart';
-import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/source_file_popup.dart';
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
+import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.dart';
 
 class TakleIdCardPage extends StatefulWidget {
   const TakleIdCardPage({super.key});
@@ -130,15 +134,24 @@ class _TakleIdCardPageState extends State<TakleIdCardPage> {
               selector:
                   (stat) => (stat.pathRecto != null && stat.pathVerso != null),
               builder: (context, hasType) {
+                final cubit = context.read<KycDocCubit>();
+                bool alreadyStarted = cubit.state.alreadyStarted;
+
                 return ElevatedButton(
                   onPressed:
                       hasType
-                          ? () {
-                            log('Continuer');
-                            context.pushNamed(TakeSelfiePage.name);
+                          ? () async {
+                            await getIt<KycDocLocalRepository>().save(
+                              cubit.state,
+                            );
+                            if (alreadyStarted) {
+                              context.pop(true);
+                            } else {
+                              context.pushNamed(TakeSelfiePage.name);
+                            }
                           }
                           : null,
-                  child: const Text('Continuer'),
+                  child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
                 );
               },
             ),

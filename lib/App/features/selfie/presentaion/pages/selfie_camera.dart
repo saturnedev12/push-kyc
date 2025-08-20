@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/extension/context_extension.dart';
+import 'package:push_kyc/app/core/extension/context_extension.dart';
 
 import 'utils/selfie_screen_utils.dart'; // flutter pub add image
 
@@ -151,8 +151,8 @@ class _SelfieCameraState extends State<SelfieCamera> {
                     child: Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          shape: CircleBorder(),
-                          side: BorderSide(width: 8, color: Colors.blue),
+                          shape: const CircleBorder(),
+                          side: const BorderSide(width: 8, color: Colors.blue),
                         ),
 
                         onPressed: () async {
@@ -172,7 +172,7 @@ class _SelfieCameraState extends State<SelfieCamera> {
                             shape: BoxShape.circle,
                             border: Border.all(color: Colors.white, width: 6),
                           ),
-                          child: Icon(FontAwesomeIcons.camera, size: 30),
+                          child: const Icon(FontAwesomeIcons.camera, size: 30),
                         ),
                       ),
                     ),
@@ -207,12 +207,12 @@ class _SelfieCameraState extends State<SelfieCamera> {
                         padding: const EdgeInsets.symmetric(horizontal: 50),
                         child: Column(
                           children: [
-                            Icon(
+                            const Icon(
                               FontAwesomeIcons.imagePortrait,
                               size: 50,
                               color: Colors.white,
                             ),
-                            Gap(20),
+                            const Gap(20),
                             Text(
                               'Centrer votre visage dans le cadre pour prendre le selfie',
                               textAlign: TextAlign.center,

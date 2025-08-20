@@ -6,12 +6,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:push_kyc/App/core/config/injection.dart';
-import 'package:push_kyc/App/core/themes/app_theme.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
+import 'package:push_kyc/app/core/themes/app_theme.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'package:push_kyc/App/features/photon_adress/data/models/photon_adress_model.dart';
-import 'package:push_kyc/App/features/photon_adress/domain/usecases/photon_address_usecases.dart';
+import 'package:push_kyc/app/features/photon_adress/data/models/photon_adress_model.dart';
+import 'package:push_kyc/app/features/photon_adress/domain/usecases/photon_address_usecases.dart';
 
 class PhotonAddressPickerPage extends StatefulWidget {
   static String name = 'PHOTON_ADRESS';

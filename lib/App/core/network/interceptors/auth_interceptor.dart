@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
 import 'package:injectable/injectable.dart';
-import 'package:push_kyc/App/core/utils/session_manager.dart';
-import 'package:push_kyc/App/features/authentification/data/models/local/user_local.dart';
+import 'package:push_kyc/app/core/utils/session_manager.dart';
+import 'package:push_kyc/app/features/authentification/data/models/local/user_local.dart';
 
 @injectable
 class AuthInterceptor extends Interceptor {

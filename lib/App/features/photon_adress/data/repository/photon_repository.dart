@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:push_kyc/App/features/photon_adress/data/models/photon_adress_model.dart';
-import 'package:push_kyc/App/features/photon_adress/data/providers/phototon_adress_provider.dart';
-import 'package:push_kyc/App/features/photon_adress/domain/repositories/photo_adress_repository_interface.dart';
+import 'package:push_kyc/app/features/photon_adress/data/models/photon_adress_model.dart';
+import 'package:push_kyc/app/features/photon_adress/data/providers/phototon_adress_provider.dart';
+import 'package:push_kyc/app/features/photon_adress/domain/repositories/photo_adress_repository_interface.dart';
 
 @LazySingleton()
 class PhotonRepository implements PhotoAdressRepositoryInterface {

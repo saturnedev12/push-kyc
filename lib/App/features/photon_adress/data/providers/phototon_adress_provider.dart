@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:push_kyc/App/features/photon_adress/data/models/photon_address_collection.dart';
+import 'package:push_kyc/app/features/photon_adress/data/models/photon_address_collection.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'phototon_adress_provider.g.dart';

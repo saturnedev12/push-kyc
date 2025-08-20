@@ -1,24 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/services/navigation_service.dart';
-import 'package:push_kyc/App/features/adress_location/presentation/pages/adress_location_page.dart';
-import 'package:push_kyc/App/features/birthdate_page/presentation/birthdate_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/take_id_camera.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/take_passeport_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/takle_id_card_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/type_documents_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/take_id_camera_options.dart';
-import 'package:push_kyc/App/features/personnal_information/presentation/pages/personnal_information_page.dart';
-import 'package:push_kyc/App/features/photon_adress/presentation/pages/photon_adreess_picker_page.dart';
-import 'package:push_kyc/App/features/selfie/presentaion/pages/selfie_camera.dart';
-import 'package:push_kyc/App/features/selfie/presentaion/pages/take_selfie_page.dart';
+import 'package:push_kyc/app/core/services/navigation_service.dart';
+import 'package:push_kyc/app/features/adress_location/presentation/pages/adress_location_page.dart';
+import 'package:push_kyc/app/features/birthdate_page/presentation/birthdate_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/take_id_camera.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/take_passeport_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/takle_id_card_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/type_documents_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/take_id_camera_options.dart';
+import 'package:push_kyc/app/features/home/presentation/pages/home_page.dart';
+import 'package:push_kyc/app/features/home/presentation/pages/loading_screen.dart';
+import 'package:push_kyc/app/features/personnal_information/presentation/pages/personnal_information_page.dart';
+import 'package:push_kyc/app/features/photon_adress/presentation/pages/photon_adreess_picker_page.dart';
+import 'package:push_kyc/app/features/selfie/presentaion/pages/selfie_camera.dart';
+import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.dart';
 
 class AppRouter {
   static GoRouter router = GoRouter(
     navigatorKey: NavigationService.navigatorKey,
-    initialLocation: '/personnal_informations',
+    initialLocation: '/loading',
     redirect: (context, state) => null,
     routes: [
+      GoRoute(
+        path: '/loading',
+        name: LoadingScreen.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoadingScreen(); // const OnboardingPage();
+        },
+      ),
+      GoRoute(
+        path: '/home_page',
+        name: HomePage.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const HomePage(); // const OnboardingPage();
+        },
+      ),
       GoRoute(
         path: '/personnal_informations',
         name: PersonnalInformationPage.name,

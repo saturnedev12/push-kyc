@@ -5,7 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:push_kyc/App/core/services/navigation_service.dart';
+import 'package:push_kyc/app/core/services/navigation_service.dart';
 import 'package:toastification/toastification.dart';
 
 class ConnectinityService {

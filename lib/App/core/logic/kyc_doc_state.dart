@@ -1,8 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:push_kyc/App/core/enums/enums.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/enums.dart';
+import 'package:push_kyc/app/core/enums/enums.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
 
 class KycDocState extends Equatable {
+  final bool alreadyStarted;
+
+  //ID
   final TypeId? typeChoisi;
   final String? pathRecto;
   final String? pathVerso;
@@ -57,6 +60,7 @@ class KycDocState extends Equatable {
     this.email,
     this.phoneNumber,
     this.sexe,
+    this.alreadyStarted = false,
   });
 
   KycDocState copyWith({
@@ -80,6 +84,7 @@ class KycDocState extends Equatable {
     String? email,
     String? phoneNumber,
     Sexe? sexe,
+    bool? alreadyStarted,
   }) {
     return KycDocState(
       typeChoisi: typeChoisi ?? this.typeChoisi,
@@ -103,6 +108,7 @@ class KycDocState extends Equatable {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       sexe: sexe ?? this.sexe,
+      alreadyStarted: alreadyStarted ?? this.alreadyStarted,
     );
   }
 

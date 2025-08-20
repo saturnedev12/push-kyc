@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import 'package:push_kyc/App/features/photon_adress/domain/usecases/photon_address_usecases.dart';
-import 'package:push_kyc/App/features/photon_adress/presentation/logic/photon_adress_state.dart';
+import 'package:push_kyc/app/features/photon_adress/domain/usecases/photon_address_usecases.dart';
+import 'package:push_kyc/app/features/photon_adress/presentation/logic/photon_adress_state.dart';
 
 @injectable
 class PhotonAdressCubit extends Cubit<PhotonAdressState> {

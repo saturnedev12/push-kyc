@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/App/core/themes/app_theme.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/App/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/take_passeport_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/pages/takle_id_card_page.dart';
-import 'package:push_kyc/App/features/documents/presentation/utils/enums.dart';
+import 'package:push_kyc/app/core/themes/app_theme.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/take_passeport_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/pages/takle_id_card_page.dart';
+import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
 
 enum DocType { idCard, passport, driverLicense, residencePermit }
 
@@ -45,7 +45,7 @@ class TypeDocumentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bg = const Color(0xFFF2F2F7);
+    const bg = Color(0xFFF2F2F7);
 
     // ⚠️ Idéalement, fournis KycDocCubit plus haut (root de l’app).
     // Si tu insistes pour le fournir ici, dé-commente le BlocProvider ci-dessous.

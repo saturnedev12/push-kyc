@@ -11,25 +11,27 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:push_kyc/App/core/config/env_config.dart' as _i697;
-import 'package:push_kyc/App/core/config/isar_config.dart' as _i288;
-import 'package:push_kyc/App/core/network/dio_config.dart' as _i860;
-import 'package:push_kyc/App/core/network/interceptors/auth_interceptor.dart'
-    as _i123;
-import 'package:push_kyc/App/core/network/interceptors/error_interceptor.dart'
-    as _i921;
-import 'package:push_kyc/App/core/network/interceptors/request_interceptor.dart'
-    as _i559;
-import 'package:push_kyc/App/core/network/utils/easy_loading_handler.dart'
-    as _i231;
-import 'package:push_kyc/App/core/network/utils/env_handler.dart' as _i987;
-import 'package:push_kyc/App/core/utils/session_manager.dart' as _i315;
-import 'package:push_kyc/App/features/photon_adress/data/repository/photon_repository.dart'
-    as _i670;
-import 'package:push_kyc/App/features/photon_adress/domain/usecases/photon_address_usecases.dart'
-    as _i429;
-import 'package:push_kyc/App/features/photon_adress/presentation/logic/photon_adress_cubit.dart'
-    as _i927;
+import 'package:push_kyc/app/core/config/env_config.dart' as _i318;
+import 'package:push_kyc/app/core/config/isar_config.dart' as _i13;
+import 'package:push_kyc/app/core/network/dio_config.dart' as _i176;
+import 'package:push_kyc/app/core/network/interceptors/auth_interceptor.dart'
+    as _i1062;
+import 'package:push_kyc/app/core/network/interceptors/error_interceptor.dart'
+    as _i133;
+import 'package:push_kyc/app/core/network/interceptors/request_interceptor.dart'
+    as _i532;
+import 'package:push_kyc/app/core/network/utils/easy_loading_handler.dart'
+    as _i1008;
+import 'package:push_kyc/app/core/network/utils/env_handler.dart' as _i585;
+import 'package:push_kyc/app/core/utils/session_manager.dart' as _i288;
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart'
+    as _i961;
+import 'package:push_kyc/app/features/photon_adress/data/repository/photon_repository.dart'
+    as _i597;
+import 'package:push_kyc/app/features/photon_adress/domain/usecases/photon_address_usecases.dart'
+    as _i314;
+import 'package:push_kyc/app/features/photon_adress/presentation/logic/photon_adress_cubit.dart'
+    as _i378;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -43,32 +45,34 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     final dioConfig = _$DioConfig();
-    gh.singleton<_i288.IsarConfig>(() => _i288.IsarConfig());
-    gh.lazySingleton<_i697.EnvConfig>(() => _i697.EnvConfig());
-    gh.lazySingleton<_i559.RequestInterceptor>(
-        () => _i559.RequestInterceptor());
-    gh.lazySingleton<_i231.EasyLoadingHandler>(
-        () => _i231.EasyLoadingHandler());
-    gh.lazySingleton<_i987.EnvHandler>(() => _i987.EnvHandler());
-    gh.singleton<_i315.SessionManager>(
-        () => _i315.SessionManager(gh<_i288.IsarConfig>()));
-    gh.lazySingleton<_i921.ErrorInterceptor>(
-        () => _i921.ErrorInterceptor(gh<_i315.SessionManager>()));
-    gh.factory<_i123.AuthInterceptor>(
-        () => _i123.AuthInterceptor(gh<_i315.SessionManager>()));
+    gh.singleton<_i13.IsarConfig>(() => _i13.IsarConfig());
+    gh.lazySingleton<_i318.EnvConfig>(() => _i318.EnvConfig());
+    gh.lazySingleton<_i532.RequestInterceptor>(
+        () => _i532.RequestInterceptor());
+    gh.lazySingleton<_i1008.EasyLoadingHandler>(
+        () => _i1008.EasyLoadingHandler());
+    gh.lazySingleton<_i585.EnvHandler>(() => _i585.EnvHandler());
+    gh.singleton<_i288.SessionManager>(
+        () => _i288.SessionManager(gh<_i13.IsarConfig>()));
+    gh.singleton<_i961.KycDocLocalRepository>(
+        () => _i961.KycDocLocalRepository(gh<_i13.IsarConfig>()));
+    gh.lazySingleton<_i133.ErrorInterceptor>(
+        () => _i133.ErrorInterceptor(gh<_i288.SessionManager>()));
+    gh.factory<_i1062.AuthInterceptor>(
+        () => _i1062.AuthInterceptor(gh<_i288.SessionManager>()));
     gh.lazySingleton<_i361.Dio>(() => dioConfig.dio(
-          gh<_i123.AuthInterceptor>(),
-          gh<_i921.ErrorInterceptor>(),
-          gh<_i559.RequestInterceptor>(),
+          gh<_i1062.AuthInterceptor>(),
+          gh<_i133.ErrorInterceptor>(),
+          gh<_i532.RequestInterceptor>(),
         ));
-    gh.lazySingleton<_i670.PhotonRepository>(
-        () => _i670.PhotonRepository(gh<_i361.Dio>()));
-    gh.factory<_i429.PhotonAddressUsecases>(
-        () => _i429.PhotonAddressUsecases(gh<_i670.PhotonRepository>()));
-    gh.factory<_i927.PhotonAdressCubit>(
-        () => _i927.PhotonAdressCubit(gh<_i429.PhotonAddressUsecases>()));
+    gh.lazySingleton<_i597.PhotonRepository>(
+        () => _i597.PhotonRepository(gh<_i361.Dio>()));
+    gh.factory<_i314.PhotonAddressUsecases>(
+        () => _i314.PhotonAddressUsecases(gh<_i597.PhotonRepository>()));
+    gh.factory<_i378.PhotonAdressCubit>(
+        () => _i378.PhotonAdressCubit(gh<_i314.PhotonAddressUsecases>()));
     return this;
   }
 }
 
-class _$DioConfig extends _i860.DioConfig {}
+class _$DioConfig extends _i176.DioConfig {}
