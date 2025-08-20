@@ -21,7 +21,7 @@ Elle met en avant une architecture propre et modulaire (Clean Architecture), une
   <img src="https://i.postimg.cc/gj41ttJR/Screenshot-2025-08-20-at-15-48-00.png" alt="Capture 3" width="250" />
   <img src="https://i.postimg.cc/j2RGXYst/Screenshot-2025-08-20-at-15-48-28.png" alt="Capture 1" width="250" />
   <img src="https://i.postimg.cc/c1mqJCmH/Screenshot-2025-08-20-at-15-49-26.png" alt="Capture 2" width="250" />
-  <img src="https://i.postimg.cc/hPPkQny0/Screenshot-2025-08-20-at-15-51-45.jpg" alt="Capture 3" width="220" />
+  <img src="https://i.postimg.cc/hPPkQny0/Screenshot-2025-08-20-at-15-51-45.jpg" alt="Capture 3" width="220" style="border-radius: 30px;"/>
     <img src="https://i.postimg.cc/5N7ZwrDW/Screenshot-2025-08-20-at-15-53-37.png" alt="Capture 3" width="250" />
       <img src="https://i.postimg.cc/CxR9JNVB/Screenshot-2025-08-20-at-15-54-20.png" alt="Capture 3" width="250" />
 
@@ -29,26 +29,131 @@ Elle met en avant une architecture propre et modulaire (Clean Architecture), une
 
 ---
 
+## 📡 API & Data Layer
+
+Pour les tests et le développement, j’ai mis en place **ma propre structure Postman mock** afin de simuler les endpoints KYC.  
+Cela me permet de développer et tester l’intégration Flutter sans dépendre d’un backend réel.
+
+## 🌐 Endpoints Postman Mock
+
+Pour simuler l’API KYC, j’ai créé mes propres **endpoints Postman Mock**.  
+Chaque endpoint correspond à une étape spécifique du processus KYC.
+
+---
+
+### 1️⃣ Envoyer les informations personnelles
+
+**Endpoint**
+
+POST /kyc/personal-info
+
+```json
+{
+  "firstName": "Jean",
+  "lastName": "Dupont",
+  "email": "jean.dupont@example.com",
+  "phoneNumber": "+2250700000000",
+  "birthYear": 1990,
+  "birthMonth": 6,
+  "birthDay": 15,
+  "addressName": "Le Plateau, Abidjan",
+  "addressLat": 5.345,
+  "addressLon": -4.023,
+  "residenceCountryCode": "CI",
+  "nationalityCountryCode": "CI",
+  "postalCode": "00225"
+}
+```
+
+### 2️⃣ Upload pièce d’identité
+
+POST /kyc/upload-id
+
+Body (multipart/form-data)
+
+```json
+type = "CNI"
+recto = <file>
+verso = <file>
+```
+
+### 3️⃣ Upload selfie
+
+POST /kyc/upload-selfie
+
+Body (multipart/form-data)
+
+`selfie = <file>`
+
+#### 4️⃣ Vérifier le statut de validation
+
+GET /kyc/status/{requestId}
+
+```json
+{
+  "overall": "pending",
+  "fields": {
+    "firstName": "approved",
+    "lastName": "approved",
+    "email": "approved",
+    "phoneNumber": "approved",
+    "birthYear": "approved",
+    "birthMonth": "approved",
+    "birthDay": "pending",
+    "addressName": "approved",
+    "addressLat": "approved",
+    "addressLon": "pending",
+    "residenceCountryCode": "approved",
+    "nationalityCountryCode": "approved",
+    "postalCode": "approved",
+    "typeChoisi": "approved",
+    "pathRecto": "pending",
+    "pathVerso": "pending",
+    "pathPassport": "rejected",
+    "pathSelfie": "pending"
+  },
+  "reasons": {
+    "pathPassport": "MRZ not readable"
+  },
+  "requestId": "kyc_abc123",
+  "updatedAt": "2025-08-20T18:00:00Z"
+}
+```
+
+### 📂 Structure du code
+
+```bash
+├── models
+│   ├── kyc_fields_dto.dart
+│   ├── kyc_status_dto.dart
+│   ├── kyc_submission_response.dart
+│   └── personal_info_dto.dart
+└── providers
+    └── kyc_provider.dart
+```
+
+---
+
 ## ✨ Fonctionnalités principales
 
-- 📸 **Vérification faciale avec Google ML Kit**  
-  Détection de visage lors de la prise du selfie (contrôle qu’un seul visage est présent et que l’utilisateur regarde bien la caméra).  
+- 📸 **Vérification faciale avec Google ML Kit**
+  Détection de visage lors de la prise du selfie (contrôle qu’un seul visage est présent et que l’utilisateur regarde bien la caméra).
   👉 Cette fonctionnalité est au cœur du processus KYC et constitue un élément différenciateur majeur.
 
-- 📡 **Détection d’état de connexion Internet**  
+- 📡 **Détection d’état de connexion Internet**
   Vérification en temps réel de l’état du réseau afin de basculer automatiquement entre mode en ligne et mode hors ligne.
 
-- 💾 **Stockage local avec Isar**  
-  Sauvegarde sécurisée des informations utilisateur pour une utilisation **offline-first**.  
+- 💾 **Stockage local avec Isar**
+  Sauvegarde sécurisée des informations utilisateur pour une utilisation **offline-first**.
   Les données collectées peuvent être synchronisées avec le serveur une fois la connexion rétablie.
 
-- 🔒 **Sécurité**  
+- 🔒 **Sécurité**
   Respect strict des **directives OWASP** pour le développement sécurisé (chiffrement, validation des entrées, gestion sécurisée des sessions).
 
-- 🧩 **Clean Architecture**  
+- 🧩 **Clean Architecture**
   Séparation claire des couches (données, domaine, présentation) pour assurer testabilité, évolutivité et maintenabilité.
 
-- 🧪 **Tests unitaires**  
+- 🧪 **Tests unitaires**
   Mis en place avec **Flutter Test** afin de garantir la robustesse et la fiabilité de l’application.
 
 ---

@@ -4,6 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
 import 'package:push_kyc/app/core/routers/app_router.dart';
 import 'package:push_kyc/app/core/themes/app_theme.dart';
+import 'package:push_kyc/app/features/authentification/presentation/logic/auth_cubit.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/features/photon_adress/presentation/logic/photon_adress_cubit.dart';
 import 'package:toastification/toastification.dart';
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
         BlocProvider<PhotonAdressCubit>(
           create: (context) => getIt<PhotonAdressCubit>(),
         ),
+        BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
       ],
       child: ToastificationWrapper(
         child: MediaQuery(

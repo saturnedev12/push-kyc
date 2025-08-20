@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:push_kyc/app/core/enums/enums.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
@@ -9,6 +10,7 @@ import 'package:push_kyc/app/features/local_storage/data/schemas/kyc_doc_local.d
 class KycDocLocalRepository {
   final IsarConfig isarConfig;
   KycDocLocalRepository(this.isarConfig);
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   /// Sauvegarde (id=0) l'état KYC en base locale
   Future<void> save(KycDocState state) async {
@@ -101,5 +103,36 @@ class KycDocLocalRepository {
     await isarConfig.instance.writeTxn(() async {
       await isarConfig.instance.kycDocLocals.delete(0);
     });
+  }
+
+  // 🔐 GESTION SECURE STORAGE
+
+  /// Sauvegarde email et token
+  Future<void> saveCredentials({
+    required String email,
+    required String accessToken,
+    required String refreshToken,
+  }) async {
+    await secureStorage.write(key: "user_email", value: email);
+    await secureStorage.write(key: "accessToken", value: accessToken);
+    await secureStorage.write(key: "refreshToken", value: refreshToken);
+  }
+
+  /// Récupère email et token
+  Future<Map<String, String?>> getCredentials() async {
+    final email = await secureStorage.read(key: "user_email");
+    final accessToken = await secureStorage.read(key: "accessToken");
+    final refreshToken = await secureStorage.read(key: "refreshToken");
+    return {
+      "email": email,
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+    };
+  }
+
+  /// Vérifie si des identifiants existent
+  Future<bool> hasCredentials() async {
+    final creds = await getCredentials();
+    return (creds["email"] != null && creds["token"] != null);
   }
 }

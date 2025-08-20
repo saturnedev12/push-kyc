@@ -34,7 +34,7 @@ class _KycProvider implements KycProvider {
     )
         .compose(
           _dio.options,
-          '/kyc/personal-info',
+          'https://199c722e-5157-4f29-a7a0-1269ea8d2063.mock.pstmn.io/kyc/personal-info',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -105,7 +105,7 @@ class _KycProvider implements KycProvider {
     )
         .compose(
           _dio.options,
-          '/kyc/id-document',
+          'https://199c722e-5157-4f29-a7a0-1269ea8d2063.mock.pstmn.io/kyc/id-document',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -146,7 +146,7 @@ class _KycProvider implements KycProvider {
     )
         .compose(
           _dio.options,
-          '/kyc/selfie',
+          'https://199c722e-5157-4f29-a7a0-1269ea8d2063.mock.pstmn.io/kyc/selfie',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -179,7 +179,7 @@ class _KycProvider implements KycProvider {
     )
         .compose(
           _dio.options,
-          '/kyc/status',
+          'https://199c722e-5157-4f29-a7a0-1269ea8d2063.mock.pstmn.io/kyc/status',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -212,7 +212,7 @@ class _KycProvider implements KycProvider {
     )
         .compose(
           _dio.options,
-          '/kyc/cancel',
+          'https://199c722e-5157-4f29-a7a0-1269ea8d2063.mock.pstmn.io/kyc/cancel',
           queryParameters: queryParameters,
           data: _data,
         )

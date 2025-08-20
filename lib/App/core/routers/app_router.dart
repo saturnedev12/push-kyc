@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:push_kyc/app/core/services/navigation_service.dart';
 import 'package:push_kyc/app/features/adress_location/presentation/pages/adress_location_page.dart';
+import 'package:push_kyc/app/features/authentification/presentation/pages/login_page.dart';
 import 'package:push_kyc/app/features/birthdate_page/presentation/birthdate_page.dart';
 import 'package:push_kyc/app/features/documents/presentation/pages/take_id_camera.dart';
 import 'package:push_kyc/app/features/documents/presentation/pages/take_passeport_page.dart';
@@ -18,9 +19,16 @@ import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.
 class AppRouter {
   static GoRouter router = GoRouter(
     navigatorKey: NavigationService.navigatorKey,
-    initialLocation: '/loading',
+    initialLocation: '/login',
     redirect: (context, state) => null,
     routes: [
+      GoRoute(
+        path: '/login',
+        name: LoginPage.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const LoginPage(); // const OnboardingPage();
+        },
+      ),
       GoRoute(
         path: '/loading',
         name: LoadingScreen.name,
