@@ -9,14 +9,21 @@ class HeaderAction extends StatelessWidget {
     required this.icon,
     required this.label,
     this.onTap,
+    this.iconColor,
+    this.borderColor,
+    this.labelColor,
   });
   final IconData icon;
   final String label;
   final VoidCallback? onTap;
+  final Color? iconColor;
+  final Color? borderColor;
+  final Color? labelColor;
 
   @override
   Widget build(BuildContext context) {
-    final border = CupertinoColors.systemGrey4.resolveFrom(context);
+    final border =
+        borderColor ?? CupertinoColors.systemGrey4.resolveFrom(context);
     final bg = CupertinoColors.systemBackground.resolveFrom(context);
     return Material(
       color: Colors.transparent,
@@ -35,13 +42,14 @@ class HeaderAction extends StatelessWidget {
               Icon(
                 icon,
                 size: 16,
-                color: CupertinoColors.label.resolveFrom(context),
+                color: iconColor ?? CupertinoColors.label.resolveFrom(context),
               ),
               const SizedBox(width: 6),
               Text(
                 label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
+                  color: labelColor,
                   fontWeight: FontWeight.w600,
                 ),
               ),

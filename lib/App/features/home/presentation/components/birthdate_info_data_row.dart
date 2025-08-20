@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:push_kyc/app/core/constants/constants.dart';
 import 'package:push_kyc/app/core/enums/enums.dart';
 import 'package:push_kyc/app/core/extension/context_extension.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/core/themes/app_theme.dart';
 import 'package:push_kyc/app/features/birthdate_page/presentation/birthdate_page.dart';
 import 'package:push_kyc/app/features/home/presentation/components/round_badge.dart';
@@ -35,6 +36,7 @@ class BirthdateInfoDataRow extends StatelessWidget {
 
         return InkWell(
           onTap: () {
+            editMode = true;
             context.pushNamed(BirthdatePage.name);
           },
           child: Padding(

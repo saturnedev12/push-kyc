@@ -9,8 +9,8 @@ import 'package:gap/gap.dart';
 import 'package:push_kyc/App/core/themes/app_theme.dart';
 import 'package:push_kyc/App/features/home/presentation/pages/home_page.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/core/routers/app_router.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 
 class LoadingScreen extends StatefulWidget {

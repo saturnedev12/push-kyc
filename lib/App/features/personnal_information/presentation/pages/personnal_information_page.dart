@@ -1,15 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
-import 'package:push_kyc/app/features/adress_location/presentation/pages/adress_location_page.dart';
+import 'package:push_kyc/app/core/constants/constants.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/birthdate_page/presentation/birthdate_page.dart';
 import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 import 'package:push_kyc/app/features/personnal_information/presentation/components/ci_phone_number.dart';
@@ -68,7 +66,6 @@ class _PersonnalInformationPageState extends State<PersonnalInformationPage> {
                   s.phoneNumber != null,
           builder: (context, ok) {
             final cubit = context.read<KycDocCubit>();
-            bool alreadyStarted = cubit.state.alreadyStarted;
 
             return ElevatedButton(
               onPressed:
@@ -76,14 +73,14 @@ class _PersonnalInformationPageState extends State<PersonnalInformationPage> {
                       ? () async {
                         cubit.setAlreadyStarted(true);
                         await getIt<KycDocLocalRepository>().save(cubit.state);
-                        if (alreadyStarted) {
+                        if (editMode) {
                           context.pop(true);
                         } else {
                           context.pushNamed(BirthdatePage.name);
                         }
                       }
                       : null,
-              child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
+              child: Text(editMode ? 'Terminer' : 'Continuer'),
             );
           },
         ),

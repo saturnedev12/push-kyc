@@ -7,8 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/core/constants/constants.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/adress_location/presentation/pages/components/adress_location_selector.dart';
 import 'package:push_kyc/app/features/adress_location/presentation/pages/components/adress_map.dart';
 import 'package:push_kyc/app/features/adress_location/presentation/pages/components/adress_residence_country_selector.dart';
@@ -61,21 +62,20 @@ class _AdressLocationPageState extends State<AdressLocationPage> {
                   s.residenceCountryCode != null,
           builder: (context, ok) {
             final cubit = context.read<KycDocCubit>();
-            bool alreadyStarted = cubit.state.alreadyStarted;
 
             return ElevatedButton(
               onPressed:
                   ok
                       ? () async {
                         await getIt<KycDocLocalRepository>().save(cubit.state);
-                        if (alreadyStarted) {
+                        if (editMode) {
                           context.pop(true);
                         } else {
                           context.pushNamed(TypeDocumentsPage.name);
                         }
                       }
                       : null,
-              child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
+              child: Text(editMode ? 'Terminer' : 'Continuer'),
             );
           },
         ),

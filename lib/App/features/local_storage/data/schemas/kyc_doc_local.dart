@@ -6,7 +6,7 @@ part 'kyc_doc_local.g.dart';
 class KycDocLocal {
   Id id = 1;
 
-  bool alreadyStarted = false;
+  bool? alreadyStarted;
   bool validationOk = false;
 
   String? typeChoisi;

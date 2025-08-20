@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,11 +8,13 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/core/constants/constants.dart';
+
 import 'package:push_kyc/app/core/themes/app_theme.dart';
 import 'package:push_kyc/app/features/adress_location/presentation/pages/adress_location_page.dart';
 import 'package:push_kyc/app/features/documents/presentation/pages/type_documents_page.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 
 class BirthdatePage extends StatefulWidget {
@@ -189,24 +193,22 @@ class _BirthdatePageState extends State<BirthdatePage> {
               selector: (s) => s.birthDate != null,
               builder: (context, ok) {
                 final cubit = context.read<KycDocCubit>();
-                bool alreadyStarted = cubit.state.alreadyStarted;
 
                 return ElevatedButton(
                   onPressed:
                       ok
                           ? () async {
-                            cubit.setAlreadyStarted(true);
                             await getIt<KycDocLocalRepository>().save(
                               cubit.state,
                             );
-                            if (alreadyStarted) {
+                            if (editMode) {
                               context.pop(true);
                             } else {
                               context.pushNamed(AdressLocationPage.name);
                             }
                           }
                           : null,
-                  child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
+                  child: Text(editMode ? 'Terminer' : 'Continuer'),
                 );
               },
             ),

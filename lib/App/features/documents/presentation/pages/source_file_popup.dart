@@ -7,10 +7,10 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/select_and_crop_from_gallery.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/take_id_camera_options.dart';
 
 import 'take_id_camera.dart';

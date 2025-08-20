@@ -1,7 +1,6 @@
 // tale_id_card_page.dart
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dotted_border/dotted_border.dart';
@@ -10,8 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_cubit.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/core/constants/constants.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/documents/presentation/pages/source_file_popup.dart';
 import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.dart';
@@ -101,7 +101,6 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
               selector: (stat) => stat.pathPassport != null,
               builder: (context, hasType) {
                 final cubit = context.read<KycDocCubit>();
-                bool alreadyStarted = cubit.state.alreadyStarted;
 
                 return ElevatedButton(
                   onPressed:
@@ -110,14 +109,14 @@ class _TakePasseportPageState extends State<TakePasseportPage> {
                             await getIt<KycDocLocalRepository>().save(
                               cubit.state,
                             );
-                            if (alreadyStarted) {
+                            if (editMode) {
                               context.pop(true);
                             } else {
                               context.pushNamed(TakeSelfiePage.name);
                             }
                           }
                           : null,
-                  child: Text(alreadyStarted ? 'Terminer' : 'Continuer'),
+                  child: Text(editMode ? 'Terminer' : 'Continuer'),
                 );
               },
             ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:injectable/injectable.dart';
-import 'package:push_kyc/app/core/config/injection.dart';
-import 'package:push_kyc/app/core/config/isar_config.dart';
 import 'package:push_kyc/app/core/enums/enums.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
 
@@ -122,44 +119,6 @@ class KycDocCubit extends Cubit<KycDocState> {
   void setEmail(String? v) => emit(state.copyWith(email: _clean(v)));
   void setPhone(String? v) => emit(state.copyWith(phoneNumber: _clean(v)));
   void setSexe(Sexe? s) => emit(state.copyWith(sexe: s));
-
-  /// Sauvegarde l’état courant dans Isar (toujours un seul record id=0)
-  // Future<void> saveToLocal() async {
-  //   final local =
-  //       KycDocLocal()
-  //         ..id = 1
-  //         ..alreadyStarted = state.alreadyStarted
-  //         ..validationOk = state.validationOk
-  //         ..typeChoisi =
-  //             (state.typeChoisi != null)
-  //                 ? TypeId.values.byName(state.typeChoisi!.name).name
-  //                 : null
-  //         ..pathRecto = state.pathRecto
-  //         ..pathVerso = state.pathVerso
-  //         ..pathPassport = state.pathPassport
-  //         ..pathSelfie = state.pathSelfie
-  //         ..birthYear = state.birthYear
-  //         ..birthMonth = state.birthMonth
-  //         ..birthDay = state.birthDay
-  //         ..addressName = state.addressName
-  //         ..addressLon = state.addressLon
-  //         ..addressLat = state.addressLat
-  //         ..residenceCountryCode = state.residenceCountryCode
-  //         ..postalCode = state.postalCode
-  //         ..firstName = state.firstName
-  //         ..lastName = state.lastName
-  //         ..email = state.email
-  //         ..phoneNumber = state.phoneNumber
-  //         ..sexe =
-  //             (state.sexe != null)
-  //                 ? Sexe.values.byName(state.sexe!.name).name
-  //                 : null
-  //         ..nationalityCountryCode = state.nationalityCountryCode;
-
-  //   await isarConfig.instance.writeTxn(() async {
-  //     await isarConfig.instance.kycDocLocals.put(local);
-  //   });
-  // }
 
   /// Recharge le state depuis Isar (si un enregistrement existe)
   Future<void> loadFromLocal(KycDocState kstate) async {

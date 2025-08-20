@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:push_kyc/app/core/enums/enums.dart';
 import 'package:push_kyc/app/features/documents/presentation/utils/enums.dart';
 import 'package:push_kyc/app/core/config/isar_config.dart';
-import 'package:push_kyc/app/core/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
 import 'package:push_kyc/app/features/local_storage/data/schemas/kyc_doc_local.dart';
 
 @singleton
@@ -95,5 +95,11 @@ class KycDocLocalRepository {
       sexe: parseSexe(local.sexe),
       nationalityCountryCode: local.nationalityCountryCode,
     );
+  }
+
+  Future<void> clear() async {
+    await isarConfig.instance.writeTxn(() async {
+      await isarConfig.instance.kycDocLocals.delete(0);
+    });
   }
 }

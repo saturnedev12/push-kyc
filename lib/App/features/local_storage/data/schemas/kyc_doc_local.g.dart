@@ -269,7 +269,7 @@ KycDocLocal _kycDocLocalDeserialize(
   object.addressLat = reader.readDoubleOrNull(offsets[0]);
   object.addressLon = reader.readDoubleOrNull(offsets[1]);
   object.addressName = reader.readStringOrNull(offsets[2]);
-  object.alreadyStarted = reader.readBool(offsets[3]);
+  object.alreadyStarted = reader.readBoolOrNull(offsets[3]);
   object.birthDay = reader.readLongOrNull(offsets[4]);
   object.birthMonth = reader.readLongOrNull(offsets[5]);
   object.birthYear = reader.readLongOrNull(offsets[6]);
@@ -305,7 +305,7 @@ P _kycDocLocalDeserializeProp<P>(
     case 2:
       return (reader.readStringOrNull(offset)) as P;
     case 3:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset)) as P;
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
@@ -761,7 +761,25 @@ extension KycDocLocalQueryFilter
   }
 
   QueryBuilder<KycDocLocal, KycDocLocal, QAfterFilterCondition>
-      alreadyStartedEqualTo(bool value) {
+      alreadyStartedIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'alreadyStarted',
+      ));
+    });
+  }
+
+  QueryBuilder<KycDocLocal, KycDocLocal, QAfterFilterCondition>
+      alreadyStartedIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'alreadyStarted',
+      ));
+    });
+  }
+
+  QueryBuilder<KycDocLocal, KycDocLocal, QAfterFilterCondition>
+      alreadyStartedEqualTo(bool? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'alreadyStarted',
@@ -3760,7 +3778,7 @@ extension KycDocLocalQueryProperty
     });
   }
 
-  QueryBuilder<KycDocLocal, bool, QQueryOperations> alreadyStartedProperty() {
+  QueryBuilder<KycDocLocal, bool?, QQueryOperations> alreadyStartedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'alreadyStarted');
     });
