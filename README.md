@@ -13,6 +13,17 @@ Elle propose un parcours **KYC (Know Your Customer)** complet : authentification
 
 L’objectif est double : **respect strict des bonnes pratiques de sécurité (OWASP)** et **expérience fiable hors-ligne** grâce à une architecture modulaire et testable.
 
+#### 🧪 TestFlight (bêta publique)
+
+<p align="center">
+  <a href="https://testflight.apple.com/join/vaNDuUxC" target="_blank">
+    <img alt="Join on TestFlight"
+         src="https://img.shields.io/badge/TestFlight-Join%20Beta-0A84FF?logo=apple&logoColor=white&style=for-the-badge">
+  </a>
+</p>
+<p align="center">
+  <a href="https://testflight.apple.com/join/vaNDuUxC"><b>➡️ Téléchargez Push KYC sur iPhone via TestFlight</b></a>
+
 ### 🎯 Ce que l’app couvre
 
 - **Login sécurisé** (JWT) + stockage local chiffré via `flutter_secure_storage`.
