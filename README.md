@@ -13,6 +13,12 @@ Elle propose un parcours **KYC (Know Your Customer)** complet : authentification
 
 L’objectif est double : **respect strict des bonnes pratiques de sécurité (OWASP)** et **expérience fiable hors-ligne** grâce à une architecture modulaire et testable.
 
+> **Note importante :**  
+> Toutes les API et requêtes de cette application sont **mockées**.  
+> Lors de la connexion, l’utilisateur peut saisir **n’importe quel email et mot de passe** : aucune vérification réelle n’est effectuée.  
+> Les données renseignées **ne sont jamais envoyées sur un serveur distant** et restent uniquement sur l’appareil.  
+> Les réponses des API sont **statiques** et simulées pour les besoins du test technique.
+
 #### 🧪 TestFlight (bêta publique)
 
 <p align="center">
@@ -25,13 +31,13 @@ L’objectif est double : **respect strict des bonnes pratiques de sécurité (O
   <a href="https://testflight.apple.com/join/vaNDuUxC"><b>➡️ Téléchargez Push KYC sur iPhone via TestFlight</b></a>
 
   <p align="center">
-    <a href="https://github.com/yourusername/push_kyc/releases/latest" target="_blank">
+    <a href="https://drive.google.com/file/d/1pEVorvQjl731QhBWMoYMB-5X5HHwE8nm/view?usp=sharing" target="_blank">
       <img alt="Download APK"
            src="https://img.shields.io/badge/Android-Download%20APK-3DDC84?logo=android&logoColor=white&style=for-the-badge">
     </a>
   </p>
   <p align="center">
-    <a href="https://github.com/yourusername/push_kyc/releases/latest"><b>⬇️ Téléchargez Push KYC sur Android (APK)</b></a>
+    <a href="https://drive.google.com/file/d/1pEVorvQjl731QhBWMoYMB-5X5HHwE8nm/view?usp=sharing"><b>⬇️ Téléchargez Push KYC sur Android (APK)</b></a>
   </p>
 
 ### 🎯 Ce que l’app couvre
