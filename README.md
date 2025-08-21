@@ -40,6 +40,19 @@ En résumé, **Push KYC** démontre un **parcours KYC complet**, une **gestion r
 
 ---
 
+## 📱 Présentation de l'application
+
+<div style="background-color: #FFFFFF; padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <img src="https://i.postimg.cc/TY20yfx9/Screenshot-2025-08-21-at-02-07-13.png" alt="Capture 3" width="250" />
+  <img src="https://i.postimg.cc/gj41ttJR/Screenshot-2025-08-20-at-15-48-00.png" alt="Capture 3" width="250" />
+  <img src="https://i.postimg.cc/j2RGXYst/Screenshot-2025-08-20-at-15-48-28.png" alt="Capture 1" width="250" />
+  <img src="https://i.postimg.cc/c1mqJCmH/Screenshot-2025-08-20-at-15-49-26.png" alt="Capture 2" width="250" />
+  <img src="https://i.postimg.cc/hPPkQny0/Screenshot-2025-08-20-at-15-51-45.jpg" alt="Capture 3" width="220" style="border-radius: 30px;"/>
+    <img src="https://i.postimg.cc/5N7ZwrDW/Screenshot-2025-08-20-at-15-53-37.png" alt="Capture 3" width="250" />
+      <img src="https://i.postimg.cc/CxR9JNVB/Screenshot-2025-08-20-at-15-54-20.png" alt="Capture 3" width="250" />
+
+</div>
+
 ## ✨ Fonctionnalités principales
 
 - 📸 **Vérification faciale avec Google ML Kit**  
@@ -101,19 +114,6 @@ En résumé, **Push KYC** démontre un **parcours KYC complet**, une **gestion r
   - Intégration continue prévue pour garantir la qualité à chaque livraison.
 
 ---
-
-## 📱 Présentation de l'application
-
-<div style="background-color: #FFFFFF; padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between;">
-  <img src="https://i.postimg.cc/TY20yfx9/Screenshot-2025-08-21-at-02-07-13.png" alt="Capture 3" width="250" />
-  <img src="https://i.postimg.cc/gj41ttJR/Screenshot-2025-08-20-at-15-48-00.png" alt="Capture 3" width="250" />
-  <img src="https://i.postimg.cc/j2RGXYst/Screenshot-2025-08-20-at-15-48-28.png" alt="Capture 1" width="250" />
-  <img src="https://i.postimg.cc/c1mqJCmH/Screenshot-2025-08-20-at-15-49-26.png" alt="Capture 2" width="250" />
-  <img src="https://i.postimg.cc/hPPkQny0/Screenshot-2025-08-20-at-15-51-45.jpg" alt="Capture 3" width="220" style="border-radius: 30px;"/>
-    <img src="https://i.postimg.cc/5N7ZwrDW/Screenshot-2025-08-20-at-15-53-37.png" alt="Capture 3" width="250" />
-      <img src="https://i.postimg.cc/CxR9JNVB/Screenshot-2025-08-20-at-15-54-20.png" alt="Capture 3" width="250" />
-
-</div>
 
 ## 🔐 Authentification & Sécurité (OWASP)
 
