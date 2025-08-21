@@ -318,6 +318,7 @@ class _Field extends StatelessWidget {
     final field = TextField(
       controller: controller,
       keyboardType: TextInputType.number,
+      enabled: false,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       onChanged: onChanged,
       decoration: InputDecoration(
