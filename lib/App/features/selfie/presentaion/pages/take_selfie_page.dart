@@ -114,7 +114,7 @@ class _TakeSelfiePageState extends State<TakeSelfiePage> {
                             context.goNamed(HomePage.name);
                           }
                           : null,
-                  child: Text(editMode ? 'Modifier' : 'Continuer'),
+                  child: const Text('Terminer'),
                 );
               },
             ),

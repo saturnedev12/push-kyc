@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
@@ -25,7 +23,7 @@ class SelfieCamera extends StatefulWidget {
 }
 
 class _SelfieCameraState extends State<SelfieCamera> {
-  CameraController? _controller;
+  late CameraController _controller;
   late FaceDetector _faceDetector;
   bool _isDetecting = false;
   Color _frameColor = Colors.white;
@@ -49,17 +47,18 @@ class _SelfieCameraState extends State<SelfieCamera> {
     cameras = await availableCameras();
     final frontCamera = cameras.firstWhere(
       (cam) => cam.lensDirection == CameraLensDirection.front,
+      orElse: () => cameras.first,
     );
 
     _controller = CameraController(frontCamera, ResolutionPreset.medium);
-    await _controller!.initialize();
-    _controller!.startImageStream((image) async {
+    await _controller.initialize();
+    _controller.startImageStream((image) async {
       if (_isDetecting) return;
       _isDetecting = true;
 
       try {
         final faces = await _faceDetector.processImage(
-          cameraImageToInputImage(image, _controller!.description),
+          cameraImageToInputImage(image, _controller.description),
         );
         if (faces.length == 1) {
           if (detectionState != 1) {
@@ -109,7 +108,7 @@ class _SelfieCameraState extends State<SelfieCamera> {
   final bool _capturing = false;
 
   Future<File?> _onCapture() async {
-    if (!_controller!.value.isInitialized) return null;
+    if (!_controller.value.isInitialized) return null;
     if (_capturing) return null; // évite double-tap
 
     // setState(() {
@@ -119,11 +118,11 @@ class _SelfieCameraState extends State<SelfieCamera> {
     try {
       // Verrouiller l’orientation pour stabiliser la capture
       try {
-        await _controller!.lockCaptureOrientation();
+        await _controller.lockCaptureOrientation();
       } catch (_) {}
 
       // Prendre la photo
-      final shot = await _controller!.takePicture();
+      final shot = await _controller.takePicture();
       if (!mounted) return null;
 
       return File(shot.path);
@@ -135,7 +134,7 @@ class _SelfieCameraState extends State<SelfieCamera> {
       return null;
     } finally {
       try {
-        await _controller!.unlockCaptureOrientation();
+        await _controller.unlockCaptureOrientation();
       } catch (_) {}
       // setState(() {
       //   _capturing = false;
@@ -150,7 +149,7 @@ class _SelfieCameraState extends State<SelfieCamera> {
     setState(() => _switching = true);
 
     try {
-      await _controller!.dispose();
+      await _controller.dispose();
       // alterne entre avant/arrière
       // on tente en priorité le "front" si on n’y est pas, sinon l’autre
       final nextIndex = cameras.indexWhere(
@@ -171,7 +170,7 @@ class _SelfieCameraState extends State<SelfieCamera> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     _faceDetector.close();
     super.dispose();
   }
@@ -212,10 +211,9 @@ class _SelfieCameraState extends State<SelfieCamera> {
                     child: FittedBox(
                       fit: BoxFit.cover,
                       child: SizedBox(
-                        width:
-                            _controller!.value.previewSize!.height, // inversé
-                        height: _controller!.value.previewSize!.width,
-                        child: CameraPreview(_controller!),
+                        width: _controller.value.previewSize!.height, // inversé
+                        height: _controller.value.previewSize!.width,
+                        child: CameraPreview(_controller),
                       ),
                     ),
                   ),
@@ -254,18 +252,10 @@ class _SelfieCameraState extends State<SelfieCamera> {
                           side: BorderSide(width: 8, color: _frameColor),
                         ),
 
-                        // onPressed: () async {
-                        //   final file = await onCapture(
-                        //     context: context,
-                        //     controller: _controller,
-                        //     frameRectOnScreen: _frameRectOnScreen,
-                        //     state: this,
-                        //   );
-
-                        //   context.pop(file);
-                        // },
                         onPressed:
-                            (_frameColor == Colors.green)
+                            (Theme.of(context).platform ==
+                                        TargetPlatform.android ||
+                                    _frameColor == Colors.green)
                                 ? () async {
                                   final file = await _onCapture();
                                   if (file != null) {
@@ -283,7 +273,12 @@ class _SelfieCameraState extends State<SelfieCamera> {
                           child: Icon(
                             FontAwesomeIcons.camera,
                             size: 30,
-                            color: _frameColor,
+                            color:
+                                (Theme.of(context).platform ==
+                                            TargetPlatform.android ||
+                                        _frameColor == Colors.green)
+                                    ? Colors.black
+                                    : _frameColor,
                           ),
                         ),
                       ),
@@ -306,6 +301,26 @@ class _SelfieCameraState extends State<SelfieCamera> {
                           color: Colors.white,
                         ),
                         tooltip: 'Changer de caméra',
+                      ),
+                    ),
+                  ),
+                  //bouton retour
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top + 12,
+                    left: 12,
+                    child: Material(
+                      color: Colors.black.withOpacity(0.35),
+                      shape: const CircleBorder(),
+                      clipBehavior: Clip.antiAlias,
+                      child: IconButton(
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: const FaIcon(
+                          FontAwesomeIcons.chevronLeft,
+                          size: 18,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

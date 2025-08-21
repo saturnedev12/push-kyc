@@ -24,6 +24,16 @@ L’objectif est double : **respect strict des bonnes pratiques de sécurité (O
 <p align="center">
   <a href="https://testflight.apple.com/join/vaNDuUxC"><b>➡️ Téléchargez Push KYC sur iPhone via TestFlight</b></a>
 
+  <p align="center">
+    <a href="https://github.com/yourusername/push_kyc/releases/latest" target="_blank">
+      <img alt="Download APK"
+           src="https://img.shields.io/badge/Android-Download%20APK-3DDC84?logo=android&logoColor=white&style=for-the-badge">
+    </a>
+  </p>
+  <p align="center">
+    <a href="https://github.com/yourusername/push_kyc/releases/latest"><b>⬇️ Téléchargez Push KYC sur Android (APK)</b></a>
+  </p>
+
 ### 🎯 Ce que l’app couvre
 
 - **Login sécurisé** (JWT) + stockage local chiffré via `flutter_secure_storage`.
@@ -72,6 +82,7 @@ En résumé, **Push KYC** démontre un **parcours KYC complet**, une **gestion r
   - Validation qu’un **seul visage** est présent.
   - Vérification que l’utilisateur **regarde bien la caméra**.  
     👉 Cette étape est un **élément différenciateur clé** du processus KYC, garantissant la sécurité et l’intégrité des données biométriques.
+  - ⚠️ **Compatibilité** : la détection faciale peut ne pas fonctionner sur certains appareils Android ou sur d’anciennes versions d’iOS.
 
 - 📡 **Détection d’état de connexion Internet**  
   Gestion intelligente du réseau :
