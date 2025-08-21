@@ -59,6 +59,8 @@ L’objectif est double : **respect strict des bonnes pratiques de sécurité (O
 - **Isar** pour la persistance locale, **`flutter_secure_storage`** pour les données sensibles (email, token).
 - **Google ML Kit Face Detection** (bonus) : contrôle simple _in-app_ qu’un **seul visage** est présent lors du selfie.
 - **Photon API** (bonus) : autocomplétion & récupération d’adresse.
+- **Tests unitaires** : ciblent la logique métier (usecases du domaine), la validation des entrées, la gestion des erreurs et la sécurité.
+- **Mocking** : utilisation de mocks pour simuler les API, la base locale et les dépendances externes.
 
 ### 🔒 Sécurité (OWASP)
 
