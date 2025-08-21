@@ -28,7 +28,7 @@ class _AuthenticationProvider implements AuthenticationProvider {
     final _headers = <String, dynamic>{};
     final _data = body;
     final _options = _setStreamType<AuthResponseDto>(Options(
-      method: 'POST',
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )

@@ -10,6 +10,7 @@ import 'package:push_kyc/App/core/themes/app_theme.dart';
 import 'package:push_kyc/App/features/home/presentation/pages/home_page.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
 import 'package:push_kyc/app/core/routers/app_router.dart';
+import 'package:push_kyc/app/features/authentification/presentation/pages/login_page.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 
@@ -25,14 +26,18 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    () {
-      getIt<KycDocLocalRepository>().load().then((value) {
-        log(value.toString());
-        if (value != null) {
-          context.read<KycDocCubit>().loadFromLocal(value);
-        }
+    () async {
+      final hasCreds = await getIt<KycDocLocalRepository>().hasCredentials();
+      final kycDocState = await getIt<KycDocLocalRepository>().load();
+      if (kycDocState != null) {
+        context.read<KycDocCubit>().loadFromLocal(kycDocState);
+      }
+      log(hasCreds.toString(), name: 'HasCreds');
+      if (hasCreds) {
         AppRouter.router.goNamed(HomePage.name);
-      });
+      } else {
+        AppRouter.router.goNamed(LoginPage.name);
+      }
     }();
   }
 

@@ -4,11 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:push_kyc/app/core/config/injection.dart';
 import 'package:push_kyc/app/core/themes/app_theme.dart';
+import 'package:push_kyc/app/features/authentification/presentation/pages/login_page.dart';
 import 'package:push_kyc/app/features/home/presentation/components/get_started_card.dart';
 import 'package:push_kyc/app/features/home/presentation/pages/dashboard_page.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
+import 'package:push_kyc/app/features/local_storage/data/repositories/kyc_doc_local_repository.dart';
 import 'package:push_kyc/app/features/personnal_information/presentation/pages/personnal_information_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,7 +55,49 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           backgroundColor: CupertinoColors.extraLightBackgroundGray,
-          endDrawer: const Drawer(),
+          endDrawer: Drawer(
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const SizedBox(height: 32),
+                  const CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                      'https://i.postimg.cc/zvQfNk8x/profil-pro.jpg',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'saturnin.wognin@gmail.com',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 24,
+                    ),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton.icon(
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Se déconnecter'),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.kPrimaryDark,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () async {
+                          await getIt<KycDocLocalRepository>()
+                              .deleteCredentials();
+                          context.goNamed(LoginPage.name);
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           body:
               (state.alreadyStarted == true)
                   ? const DashboardPage()
@@ -77,7 +122,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 '© 2025 Wognin Saturnin Ayoua. Tous droits réservés',
                 maxLines: 1,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: AppTheme.kPrimaryDark,
                   fontSize: 10,
                 ),

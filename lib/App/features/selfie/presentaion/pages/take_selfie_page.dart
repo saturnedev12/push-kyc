@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:push_kyc/App/core/constants/constants.dart';
 import 'package:push_kyc/app/core/config/injection.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_cubit.dart';
 import 'package:push_kyc/app/features/kyc_doc/presentation/logic/kyc_doc_state.dart';
@@ -113,7 +114,7 @@ class _TakeSelfiePageState extends State<TakeSelfiePage> {
                             context.goNamed(HomePage.name);
                           }
                           : null,
-                  child: const Text('Continuer'),
+                  child: Text(editMode ? 'Modifier' : 'Continuer'),
                 );
               },
             ),

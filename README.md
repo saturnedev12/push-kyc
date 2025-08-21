@@ -8,16 +8,104 @@
 
 ## 📖 Introduction
 
-**Push KYC** est une application Flutter développée dans le cadre d’un test technique pour un poste de **Développeur Senior** chez **Push CI**.  
-L’application propose un parcours **KYC (Know Your Customer)** complet, permettant la vérification d’identité des utilisateurs via la collecte de documents, de selfies, d’informations personnelles et d’adresses.
+**Push KYC** est une application Flutter réalisée dans le cadre d’un test technique pour un poste de **Développeur Mobile**.  
+Elle propose un parcours **KYC (Know Your Customer)** complet : authentification, tableau de bord, saisie des informations personnelles, capture/chargement des justificatifs d’identité, selfie contrôlé et vérification d’adresse.
 
-Elle met en avant une architecture propre et modulaire (Clean Architecture), une gestion **offline-first**, ainsi qu’une conformité stricte aux recommandations de sécurité **OWASP**.
+L’objectif est double : **respect strict des bonnes pratiques de sécurité (OWASP)** et **expérience fiable hors-ligne** grâce à une architecture modulaire et testable.
+
+### 🎯 Ce que l’app couvre
+
+- **Login sécurisé** (JWT) + stockage local chiffré via `flutter_secure_storage`.
+- **Dashboard** après connexion, accès rapide au statut KYC.
+- **Création & gestion d’un KYC** (informations, documents, selfie, adresse).
+- **Offline-first** : enregistrement local (Isar) et **auto-synchronisation** dès le retour du réseau.
+- **API mock** Postman pour simuler le backend  
+  _(collection fournie dans l’énoncé — voir section API du README)._
+
+### 🧩 Architecture & choix techniques
+
+- **Clean Architecture** (Data / Domain / Presentation) pour la maintenabilité et les tests.
+- **Dio + Retrofit + Freezed** pour des DTOs immuables et des appels réseau typés.
+- **Isar** pour la persistance locale, **`flutter_secure_storage`** pour les données sensibles (email, token).
+- **Google ML Kit Face Detection** (bonus) : contrôle simple _in-app_ qu’un **seul visage** est présent lors du selfie.
+- **Photon API** (bonus) : autocomplétion & récupération d’adresse.
+
+### 🔒 Sécurité (OWASP)
+
+- Communication **HTTPS/TLS**, tokens expirables/rotations côté serveur.
+- **Aucune donnée sensible en clair** (tokens stockés côté OS : Keychain/Keystore).
+- Validation des entrées, gestion d’erreurs non verbeuse, purge sécurisée au logout.
+
+En résumé, **Push KYC** démontre un **parcours KYC complet**, une **gestion robuste du hors-ligne** et une **mise en conformité OWASP**, tout en restant **clair, modulaire et documenté**.
+
+---
+
+## ✨ Fonctionnalités principales
+
+- 📸 **Vérification faciale avec Google ML Kit**  
+  Détection de visage lors de la prise du selfie avec contrôle de qualité :
+
+  - Validation qu’un **seul visage** est présent.
+  - Vérification que l’utilisateur **regarde bien la caméra**.  
+    👉 Cette étape est un **élément différenciateur clé** du processus KYC, garantissant la sécurité et l’intégrité des données biométriques.
+
+- 📡 **Détection d’état de connexion Internet**  
+  Gestion intelligente du réseau :
+
+  - Vérification en temps réel de la disponibilité d’Internet.
+  - Bascule automatique entre **mode en ligne** (connexion au serveur) et **mode hors ligne** (sauvegarde locale).  
+    Cela permet à l’application d’être **résiliente même en environnement à faible connectivité**.
+
+- 💾 **Stockage local avec Isar**
+
+  - Persistance des informations utilisateur pour un fonctionnement **offline-first**.
+  - Synchronisation automatique avec le serveur dès que la connexion Internet est rétablie.
+  - Optimisé pour la **rapidité et la légèreté** sur mobile.
+
+- 🔐 **Stockage sécurisé avec `flutter_secure_storage`**  
+  Les données sensibles (comme l’**email utilisateur** et le **token JWT**) sont **chiffrées et stockées de manière sécurisée** :
+
+  - **iOS** → via **Keychain**.
+  - **Android** → via **Keystore**.  
+    Fonctions disponibles :
+  - `saveCredentials(String email, String token)` → sauvegarde.
+  - `getCredentials()` → récupération.
+  - `hasCredentials()` → vérifie la présence de données locales.  
+    👉 Cela assure un **respect strict des recommandations OWASP** concernant la gestion des secrets et des sessions.
+
+- 🗺️ **Récupération d’adresse avec l’API Photon**
+
+  - Intégration de l’API **Photon** pour l’autocomplétion et la récupération d’adresses.
+  - Permet aux utilisateurs de **sélectionner rapidement leur adresse** à partir de suggestions basées sur leur saisie.
+  - Support multi-langue et **optimisé pour les recherches locales** (utile dans le contexte d’une vérification KYC).  
+    👉 Réduit les erreurs manuelles de saisie et améliore l’expérience utilisateur.
+
+- 🔒 **Sécurité (OWASP Compliant)**  
+  Mise en place de mesures conformes aux **directives OWASP Mobile & API Security** :
+
+  - **Chiffrement** des données sensibles.
+  - **Validation stricte** des entrées utilisateur.
+  - **Authentification sécurisée avec JWT** + rotation/expiration des tokens.
+  - **Gestion sécurisée des sessions** (logout = purge locale + révocation côté serveur).
+  - Protection contre les attaques courantes (XSS, injection, MITM).
+
+- 🧩 **Clean Architecture**
+
+  - Séparation nette en **3 couches** : Data, Domaine, Présentation.
+  - Assure **testabilité**, **maintenabilité** et **scalabilité** du code.
+  - Respect des bonnes pratiques de développement modernes.
+
+- 🧪 **Tests unitaires & qualité du code**
+  - Couverture avec **Flutter Test**.
+  - Vérification de la **robustesse des fonctionnalités critiques** (authentification, sauvegarde locale, logique KYC).
+  - Intégration continue prévue pour garantir la qualité à chaque livraison.
 
 ---
 
 ## 📱 Présentation de l'application
 
 <div style="background-color: #FFFFFF; padding: 20px; border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between;">
+  <img src="https://i.postimg.cc/TY20yfx9/Screenshot-2025-08-21-at-02-07-13.png" alt="Capture 3" width="250" />
   <img src="https://i.postimg.cc/gj41ttJR/Screenshot-2025-08-20-at-15-48-00.png" alt="Capture 3" width="250" />
   <img src="https://i.postimg.cc/j2RGXYst/Screenshot-2025-08-20-at-15-48-28.png" alt="Capture 1" width="250" />
   <img src="https://i.postimg.cc/c1mqJCmH/Screenshot-2025-08-20-at-15-49-26.png" alt="Capture 2" width="250" />
@@ -26,6 +114,17 @@ Elle met en avant une architecture propre et modulaire (Clean Architecture), une
       <img src="https://i.postimg.cc/CxR9JNVB/Screenshot-2025-08-20-at-15-54-20.png" alt="Capture 3" width="250" />
 
 </div>
+
+## 🔐 Authentification & Sécurité (OWASP)
+
+Ce projet implémente une authentification moderne et **strictement conforme aux directives OWASP** (Mobile & API Security).  
+Objectifs : confidentialité, intégrité, disponibilité — sans compromettre l’UX.
+
+- **Login** via API sécurisée (HTTPS/TLS 1.2+).
+- Réception d’un **JWT** (access token) et stockage **local sécurisé**.
+- Utilisation de **`flutter_secure_storage`** (Keychain/Keystore) pour enregistrer `email` et `token`.
+- **Aucun secret** loggé ni stocké en clair.
+- **Rotation/expiration** côté serveur, check du token à chaque démarrage.
 
 ---
 
@@ -131,30 +230,6 @@ GET /kyc/status/{requestId}
 └── providers
     └── kyc_provider.dart
 ```
-
----
-
-## ✨ Fonctionnalités principales
-
-- 📸 **Vérification faciale avec Google ML Kit**
-  Détection de visage lors de la prise du selfie (contrôle qu’un seul visage est présent et que l’utilisateur regarde bien la caméra).
-  👉 Cette fonctionnalité est au cœur du processus KYC et constitue un élément différenciateur majeur.
-
-- 📡 **Détection d’état de connexion Internet**
-  Vérification en temps réel de l’état du réseau afin de basculer automatiquement entre mode en ligne et mode hors ligne.
-
-- 💾 **Stockage local avec Isar**
-  Sauvegarde sécurisée des informations utilisateur pour une utilisation **offline-first**.
-  Les données collectées peuvent être synchronisées avec le serveur une fois la connexion rétablie.
-
-- 🔒 **Sécurité**
-  Respect strict des **directives OWASP** pour le développement sécurisé (chiffrement, validation des entrées, gestion sécurisée des sessions).
-
-- 🧩 **Clean Architecture**
-  Séparation claire des couches (données, domaine, présentation) pour assurer testabilité, évolutivité et maintenabilité.
-
-- 🧪 **Tests unitaires**
-  Mis en place avec **Flutter Test** afin de garantir la robustesse et la fiabilité de l’application.
 
 ---
 

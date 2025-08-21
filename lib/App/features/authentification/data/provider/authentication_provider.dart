@@ -12,6 +12,7 @@ abstract class AuthenticationProvider {
       _AuthenticationProvider;
 
   /// Auth: email + password only
-  @POST('https://api.npoint.io/ddad54e0ae0aaf7be3ec')
+  // @POST('https://api.npoint.io/ddad54e0ae0aaf7be3ec')
+  @GET('https://api.npoint.io/ddad54e0ae0aaf7be3ec')
   Future<AuthResponseDto> login(@Body() LoginDto body);
 }

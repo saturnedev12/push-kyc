@@ -182,9 +182,9 @@ class _Scaffold extends StatelessWidget {
                         log('Continuer');
                         if (context.read<KycDocCubit>().state.typeChoisi ==
                             TypeId.PASSEPORT) {
-                          context.goNamed(TakePasseportPage.name);
+                          context.pushNamed(TakePasseportPage.name);
                         } else {
-                          context.goNamed(TakleIdCardPage.name);
+                          context.pushNamed(TakleIdCardPage.name);
                         }
                       }
                       : null,

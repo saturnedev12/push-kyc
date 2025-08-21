@@ -19,7 +19,7 @@ import 'package:push_kyc/app/features/selfie/presentaion/pages/take_selfie_page.
 class AppRouter {
   static GoRouter router = GoRouter(
     navigatorKey: NavigationService.navigatorKey,
-    initialLocation: '/login',
+    initialLocation: '/loading',
     redirect: (context, state) => null,
     routes: [
       GoRoute(

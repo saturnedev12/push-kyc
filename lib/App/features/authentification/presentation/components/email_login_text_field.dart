@@ -21,32 +21,27 @@ class EmailLoginTextField extends StatefulWidget {
 }
 
 class _EmailLoginTextFieldState extends State<EmailLoginTextField> {
-  late final TextEditingController _controller;
   String? _error;
-
-  TextEditingController get controller => _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        widget.controller ??
-        TextEditingController(text: widget.initialValue ?? '');
-    _error = _validate(_controller.text);
-    _controller.addListener(_onControllerChanged);
+
+    _error = _validate(widget.controller!.text);
+    widget.controller!.addListener(_onControllerChanged);
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onControllerChanged);
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
+    widget.controller!.removeListener(_onControllerChanged);
+
+    widget.controller!.dispose();
+
     super.dispose();
   }
 
   void _onControllerChanged() {
-    final trimmed = _controller.text.trim();
+    final trimmed = widget.controller!.text.trim();
     setState(() => _error = _validate(trimmed));
     widget.onChanged?.call(trimmed);
   }
@@ -71,7 +66,7 @@ class _EmailLoginTextFieldState extends State<EmailLoginTextField> {
       padding: const EdgeInsets.symmetric(horizontal: 30),
       sliver: SliverToBoxAdapter(
         child: TextFormField(
-          controller: _controller,
+          controller: widget.controller!,
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.done,
           textCapitalization: TextCapitalization.none,
@@ -83,7 +78,7 @@ class _EmailLoginTextFieldState extends State<EmailLoginTextField> {
             prefixIcon: const Icon(CupertinoIcons.envelope),
             prefixIconColor: AppTheme.kPrimary,
             suffixIcon:
-                (_error == null && _controller.text.trim().isNotEmpty)
+                (_error == null && widget.controller!.text.trim().isNotEmpty)
                     ? const Icon(
                       CupertinoIcons.check_mark_circled_solid,
                       color: CupertinoColors.activeGreen,

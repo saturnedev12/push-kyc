@@ -34,8 +34,8 @@ class DashboardTableActions extends StatelessWidget {
               ),
               const Spacer(),
               HeaderAction(
-                icon: CupertinoIcons.slider_horizontal_3,
-                label: 'Filtrer',
+                icon: CupertinoIcons.clock,
+                label: 'Non validé',
                 onTap: () {},
               ),
               const SizedBox(width: 8),

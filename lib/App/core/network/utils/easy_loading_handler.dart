@@ -8,8 +8,13 @@ class EasyLoadingHandler {
   init() {
     EasyLoading.instance
       ..displayDuration = const Duration(milliseconds: 2000)
-      ..backgroundColor = Colors.blue.shade400 // Couleur du fond
-      ..textColor = Colors.black // Couleur du texte
+      ..backgroundColor =
+          Colors
+              .blue
+              .shade400 // Couleur du fond
+      ..textColor =
+          Colors
+              .black // Couleur du texte
       ..indicatorColor = CupertinoColors.black
       ..radius = 20
       ..indicatorType = EasyLoadingIndicatorType.fadingCircle
@@ -26,25 +31,36 @@ class EasyLoadingHandler {
     );
   }
 
-  static showErrorToast(
-      {String? text, Color? color, Widget? errorWidget, bool? dismissOnTap}) {
+  static showErrorToast({
+    String? text,
+    Color? color,
+    Widget? errorWidget,
+    bool? dismissOnTap,
+  }) {
     EasyLoading.instance
       ..errorWidget = errorWidget
       ..backgroundColor = color ?? Colors.red.shade300;
-    EasyLoading.showError(
-      text ?? "error",
-      dismissOnTap: dismissOnTap,
-    );
+    EasyLoading.showError(text ?? "error", dismissOnTap: dismissOnTap);
   }
 
-  static showSuccesToast(
-      {String? text, Color? color, Widget? errorWidget, bool? dismissOnTap}) {
+  static showSuccesToast({
+    String? text,
+    Color? color,
+    Widget? errorWidget,
+    bool? dismissOnTap,
+  }) {
     EasyLoading.instance
       ..errorWidget = errorWidget
       ..backgroundColor = color ?? Colors.green.shade400;
-    EasyLoading.showSuccess(
-      text ?? "Success",
-      dismissOnTap: dismissOnTap,
-    );
+    EasyLoading.showSuccess(text ?? "Success", dismissOnTap: dismissOnTap);
+  }
+
+  static showToast(
+    String message, {
+    Color? color,
+    EasyLoadingToastPosition? toastPosition,
+  }) {
+    EasyLoading.instance.backgroundColor = color ?? Colors.black87;
+    EasyLoading.showToast(message, toastPosition: toastPosition);
   }
 }

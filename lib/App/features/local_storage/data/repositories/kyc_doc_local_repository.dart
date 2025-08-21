@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:push_kyc/app/core/enums/enums.dart';
@@ -123,6 +125,9 @@ class KycDocLocalRepository {
     final email = await secureStorage.read(key: "user_email");
     final accessToken = await secureStorage.read(key: "accessToken");
     final refreshToken = await secureStorage.read(key: "refreshToken");
+    log(email.toString(), name: 'TAG');
+    log(accessToken.toString(), name: 'TAG');
+    log(refreshToken.toString(), name: 'TAG');
     return {
       "email": email,
       "accessToken": accessToken,
@@ -133,6 +138,13 @@ class KycDocLocalRepository {
   /// Vérifie si des identifiants existent
   Future<bool> hasCredentials() async {
     final creds = await getCredentials();
-    return (creds["email"] != null && creds["token"] != null);
+    return (creds["email"] != null && creds["accessToken"] != null);
+  }
+
+  /// Supprime les données credentials du secure storage
+  Future<void> deleteCredentials() async {
+    await secureStorage.delete(key: "user_email");
+    await secureStorage.delete(key: "accessToken");
+    await secureStorage.delete(key: "refreshToken");
   }
 }

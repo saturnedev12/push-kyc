@@ -74,100 +74,25 @@ class _TakeIdCameraState extends State<TakeIdCamera> {
   bool _capturing = false;
 
   Future<File?> _onCapture() async {
-    if (!_controller.value.isInitialized || _frameRectOnScreen == null)
-      return null;
+    if (!_controller.value.isInitialized) return null;
     if (_capturing) return null; // évite double-tap
+
     setState(() {
       _capturing = true;
     });
 
     try {
-      // 1) Stabiliser la session: orientation + (optionnel) pausePreview
+      // Verrouiller l’orientation pour stabiliser la capture
       try {
         await _controller.lockCaptureOrientation();
       } catch (_) {}
-      // try { await _controller.pausePreview(); } catch (_) {} // dispo selon versions
 
-      // 2) Prise de vue plein capteur
+      // Prendre la photo
       final shot = await _controller.takePicture();
       if (!mounted) return null;
 
-      final rawFile = File(shot.path);
-      final rawBytes = await rawFile.readAsBytes();
-
-      // 3) Décoder + normaliser orientation EXIF (important sur Android)
-      final decoded0 = img.decodeImage(rawBytes);
-      if (decoded0 == null) return null;
-      final decoded = img.bakeOrientation(decoded0);
-
-      // 4) Tailles preview (corrigées en portrait) + taille widget
-      final pSize = _controller.value.previewSize;
-      final isPortrait =
-          MediaQuery.of(context).orientation == Orientation.portrait;
-
-      final Size previewLogical =
-          (pSize == null)
-              ? Size(decoded.width.toDouble(), decoded.height.toDouble())
-              : (isPortrait
-                  ? Size(pSize.height, pSize.width) // inversion en portrait
-                  : Size(pSize.width, pSize.height));
-
-      final Size widgetSize =
-          (context.findRenderObject() as RenderBox?)?.size ??
-          MediaQuery.of(context).size;
-
-      // 5) Mapping cover (comment CameraPreview remplit le widget)
-      final m = documentComputeCoverMapping(
-        imageSize: previewLogical,
-        widgetSize: widgetSize,
-      );
-
-      // 6) Cadre écran -> coords dans l’image peinte (preview)
-      final Rect frameInPreviewImage = Rect.fromLTWH(
-        (_frameRectOnScreen!.left - m.dx) / m.scale,
-        (_frameRectOnScreen!.top - m.dy) / m.scale,
-        _frameRectOnScreen!.width / m.scale,
-        _frameRectOnScreen!.height / m.scale,
-      );
-
-      // 7) Preview -> pixels de la photo finale
-      final double sx = decoded.width / m.imagePaintWidth;
-      final double sy = decoded.height / m.imagePaintHeight;
-
-      final Rect frameInFullImage = Rect.fromLTWH(
-        frameInPreviewImage.left * sx,
-        frameInPreviewImage.top * sy,
-        frameInPreviewImage.width * sx,
-        frameInPreviewImage.height * sy,
-      );
-
-      // 8) Clamp dans les bornes
-      int x = frameInFullImage.left.clamp(0, decoded.width - 1).toInt();
-      int y = frameInFullImage.top.clamp(0, decoded.height - 1).toInt();
-      int w = frameInFullImage.width.clamp(1, decoded.width - x).toInt();
-      int h = frameInFullImage.height.clamp(1, decoded.height - y).toInt();
-      if (w <= 1 || h <= 1) return null;
-
-      // 9) Crop
-      final cropped = img.copyCrop(decoded, x: x, y: y, width: w, height: h);
-
-      // 10) Sauvegarde
-      final base = rawFile.path.replaceFirst(
-        RegExp(r'\.(jpe?g|png|webp)$', caseSensitive: false),
-        '',
-      );
-      final outPath = '${base}_cropped.jpg';
-      final outFile = File(outPath);
-      await outFile.writeAsBytes(
-        img.encodeJpg(cropped, quality: 95),
-        flush: true,
-      );
-
-      // 11) (optionnel) reprendre la preview
-      // try { await _controller.resumePreview(); } catch (_) {}
-      return outFile;
+      return File(shot.path);
     } on CameraException catch (e) {
-      // utile pour remonter des erreurs "capture failed / closed"
       debugPrint('CameraException: ${e.code} ${e.description}');
       return null;
     } catch (e) {
