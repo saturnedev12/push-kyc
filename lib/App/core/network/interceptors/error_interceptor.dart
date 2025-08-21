@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:push_kyc/app/core/routers/app_router.dart';
 import 'package:push_kyc/app/core/utils/session_manager.dart';
+import 'package:push_kyc/app/features/authentification/presentation/pages/login_page.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../services/navigation_service.dart';
@@ -19,7 +21,7 @@ class ErrorInterceptor extends Interceptor {
     if (err.response != null) {
       if (err.response?.statusCode == 401) {
         log('TOKEN EXPIRED');
-        // AppRouter.router.goNamed(LoginPage.name);
+        AppRouter.router.goNamed(LoginPage.name);
       } else {
         log('SHOW');
         toastification.show(

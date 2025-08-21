@@ -46,7 +46,10 @@ L’objectif est double : **respect strict des bonnes pratiques de sécurité (O
 ### 🧩 Architecture & choix techniques
 
 - **Clean Architecture** (Data / Domain / Presentation) pour la maintenabilité et les tests.
+- **flutter_bloc** pour la gestion d’état réactive et scalable.  
+  J’aurais également pu utiliser **Riverpod**, qui est un équivalent moderne et populaire pour la gestion d’état dans Flutter.
 - **Dio + Retrofit + Freezed** pour des DTOs immuables et des appels réseau typés.
+- **Injectable** pour l’injection de dépendances automatisée et la modularité du code.
 - **Isar** pour la persistance locale, **`flutter_secure_storage`** pour les données sensibles (email, token).
 - **Google ML Kit Face Detection** (bonus) : contrôle simple _in-app_ qu’un **seul visage** est présent lors du selfie.
 - **Photon API** (bonus) : autocomplétion & récupération d’adresse.
